@@ -7,7 +7,7 @@ import com.intellij.psi.util.PsiUtil
 class Error (val line: Int, val column: Int, val severity: Int, val message: String) {
 
     fun offsetIn(file: PsiFile) =
-            lineOffset(file) + (column - 1)
+        lineOffset(file) + (column - 1)
 
     fun lineOffset(file: PsiFile) =
         try {
@@ -17,7 +17,7 @@ class Error (val line: Int, val column: Int, val severity: Int, val message: Str
         }
 
     fun targetElem(file: PsiFile) =
-            PsiUtil.getElementAtOffset(file, offsetIn(file))
+        PsiUtil.getElementAtOffset(file, offsetIn(file))
 
     fun severityAsText() =
         if (this.severity == 3) {
@@ -30,4 +30,5 @@ class Error (val line: Int, val column: Int, val severity: Int, val message: Str
         file
             .viewProvider
             .document!!
+
 }

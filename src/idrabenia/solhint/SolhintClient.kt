@@ -1,10 +1,11 @@
 package idrabenia.solhint
 
 import com.google.gson.Gson
-import jdk.nashorn.internal.parser.JSONParser
 import org.apache.commons.compress.utils.IOUtils
 import org.apache.commons.compress.utils.IOUtils.toByteArray
 import java.io.File
+import java.io.InputStream
+import java.lang.ProcessBuilder.Redirect.from
 import java.net.URL
 import java.nio.charset.Charset.forName
 import java.util.*
@@ -12,23 +13,20 @@ import java.util.*
 
 class SolhintClient () {
     val gson = Gson()
-    var server: Server? = null
+    var server: SolhintServer? = null
 
-    fun startServer(projectDir: String) {
-        if (server == null || !server!!.isAlive()) {
-            server = Server(projectDir)
+    fun startServer(projectDir: String): SolhintClient =
+        if (server?.isAlive() as Boolean) {
+            server = SolhintServer(projectDir)
+            this
+        } else {
+            this
         }
-    }
 
-    fun fileErrors(projectDir: String, filePath: String): ErrorList {
+    fun fileErrors(projectDir: String, filePath: String): ErrorList =
         startServer(projectDir)
-
-        return gson
-            .fromJson<ErrorList>(
-                verifyFile(filePath),
-                ErrorList::class.java
-            )
-    }
+            .verifyFile(filePath)
+            .toErrorList()
 
     fun verifyFile(filePath: String) =
         URL("http", "127.0.0.1", 3476, filePath)
@@ -38,39 +36,40 @@ class SolhintClient () {
                 String(toByteArray(it), forName("utf-8"))
             }
 
-    fun stopServer() {
-        if (server != null) {
-            server!!.stop()
-            server = null
-        }
-    }
+    fun stopServer() =
+        server?.stop()
+
+    fun String.toErrorList(): ErrorList =
+        gson.fromJson<ErrorList>(this, ErrorList::class.java)
 }
 
 
-class Server (val baseDir: String) {
+class SolhintServer(val baseDir: String) {
     val process = start()
 
-    fun start() =
+    fun start(): Process =
         ProcessBuilder()
-            .redirectInput(ProcessBuilder.Redirect.from(solhintServerCode()))
+            .redirectInput(from(serverCodeFile()))
             .directory(File(baseDir))
             .command("node")
             .start()
 
-    fun stop() =
-            process.destroyForcibly()
+    fun stop(): Process =
+        process.destroyForcibly()
 
     fun isAlive() =
         process.isAlive
 
-    private fun solhintServerCode(): File {
-        val file = File.createTempFile("solhint-server", ".js")
-        IOUtils.copy(javaClass.getResourceAsStream("solhint-server.js"), file.outputStream())
-        return file
+    private fun serverCodeFile(): File =
+        File
+            .createTempFile("solhint-server", ".js")
+            .writeFrom(javaClass.getResourceAsStream("solhint-server.js"))
+
+    private fun File.writeFrom(inputStream: InputStream): File {
+        IOUtils.copy(inputStream, this.outputStream())
+        return this
     }
 }
 
 
-class ErrorList() : ArrayList<Error>() {
-
-}
+class ErrorList() : ArrayList<Error>()

@@ -1,4 +1,4 @@
-package idrabenia.solhint
+package idrabenia.solhint.errors
 
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiUtil

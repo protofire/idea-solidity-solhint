@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
-const nodeBinPath = execSync('which solhint').toString('utf-8').replace('solhint', '').replace('\n', '');
-const solhint = require(`${nodeBinPath}../lib/node_modules/solhint/lib/index`);
+const nodeBinPath = execSync('npm config get prefix').toString('utf-8').trim();
+const solhint = require(`${nodeBinPath}/lib/node_modules/solhint/lib/index`);
 const http = require('http');
 const port = 3476;
 

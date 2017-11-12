@@ -3,7 +3,9 @@ package idrabenia.solhint
 import com.intellij.codeInspection.InspectionManager
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
+import idrabenia.solhint.client.SolhintClient
 
 
 abstract class Inspections : LocalInspectionTool() {
@@ -18,10 +20,15 @@ abstract class Inspections : LocalInspectionTool() {
             }
             .resultsArray
 
-    private fun runSolhint(file: PsiFile, manager: InspectionManager) =
-        solhintClient.fileErrors(manager.project.baseDir.path, file.virtualFile.path)
-
     protected abstract fun level(): String
+
+    private fun runSolhint(file: PsiFile, manager: InspectionManager) =
+            solhintClient.fileErrors(manager.project.baseDir.path, file.virtualFile.path)
+
+    private fun ProblemsHolder.addProblem(elem: PsiElement, text: String): ProblemsHolder {
+        this.registerProblem(elem, text)
+        return this
+    }
 }
 
 

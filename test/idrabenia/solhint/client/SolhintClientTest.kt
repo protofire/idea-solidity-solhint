@@ -1,6 +1,5 @@
-package idrabenia.solhint
+package idrabenia.solhint.client
 
-import org.apache.commons.lang.StringUtils
 import org.junit.Test
 import java.io.File
 import java.nio.file.Files
@@ -26,7 +25,7 @@ class SolhintClientTest {
 
         client.stopServer()
 
-        waitToStop(process!!.process!!)
+        waitToStop(process!!.process)
         assert(!process.isAlive())
     }
 
@@ -37,7 +36,7 @@ class SolhintClientTest {
         val file = File.createTempFile("test", ".sol")
         Files.write(file.toPath(), arrayListOf("pragma solidity ^4.1.1"))
 
-        Thread.sleep(1000)
+        Thread.sleep(3000)
         val result = client.fileErrors(".", file.absolutePath)
 
         assert(result.size == 1)

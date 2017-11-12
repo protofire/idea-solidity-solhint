@@ -14,6 +14,7 @@ class SolhintProcess(val baseDir: String) {
             .directory(File(baseDir))
             .command("node")
             .start()
+            .killOnShutdown()
 
     fun stop(): Process =
         process.destroyForcibly()
@@ -28,6 +29,11 @@ class SolhintProcess(val baseDir: String) {
 
     private fun File.writeFrom(inputStream: InputStream): File {
         IOUtils.copy(inputStream, this.outputStream())
+        return this
+    }
+
+    private fun Process.killOnShutdown(): Process {
+        Runtime.getRuntime().addShutdownHook(Thread({ this.destroyForcibly() }))
         return this
     }
 }

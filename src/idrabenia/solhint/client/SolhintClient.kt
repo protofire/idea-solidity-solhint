@@ -25,12 +25,16 @@ class SolhintClient () {
             .toErrorList()
 
     fun verifyFile(filePath: String) =
-        URL("http", "127.0.0.1", 3476, filePath)
-            .openConnection()
-            .inputStream
-            .use {
-                String(toByteArray(it), forName("utf-8"))
-            }
+        try {
+            URL("http", "127.0.0.1", 3476, filePath)
+                .openConnection()
+                .inputStream
+                .use {
+                    String(toByteArray(it), forName("utf-8"))
+                }
+        } catch (e: Exception) {
+            "[]"
+        }
 
     fun stopServer() =
         server?.stop()

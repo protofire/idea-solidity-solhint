@@ -63,5 +63,4 @@ object Environment {
         } catch (e: Exception) {
             false
         }
-
 }

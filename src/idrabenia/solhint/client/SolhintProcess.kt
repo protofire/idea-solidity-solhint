@@ -1,6 +1,6 @@
 package idrabenia.solhint.client
 
-import org.apache.commons.compress.utils.IOUtils
+import idrabenia.solhint.utils.IOUtils
 import java.io.File
 import java.io.InputStream
 

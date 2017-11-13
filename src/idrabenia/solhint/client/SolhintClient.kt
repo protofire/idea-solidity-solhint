@@ -2,7 +2,7 @@ package idrabenia.solhint.client
 
 import com.google.gson.Gson
 import idrabenia.solhint.errors.ErrorList
-import org.apache.commons.compress.utils.IOUtils.toByteArray
+import idrabenia.solhint.utils.IOUtils.toByteArray
 import java.net.URL
 import java.nio.charset.Charset.forName
 
@@ -26,7 +26,7 @@ class SolhintClient () {
 
     fun verifyFile(filePath: String) =
         try {
-            URL("http", "127.0.0.1", 3476, filePath)
+            URL("http", "127.0.0.1", 3476, "?filePath=$filePath")
                 .openConnection()
                 .inputStream
                 .use {

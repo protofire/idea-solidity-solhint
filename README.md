@@ -10,7 +10,7 @@ To correct evaluation of this plugin you may have installed:
 
 1. Node.js >= v6.9.1
 2. [Solhint](https://github.com/protofire/solhint). You may install it using command `npm install -g solhint`
-3. [Intellij-Solidity](https://plugins.jetbrains.com/plugin/9475-intellij-solidity) IDEA plugin
+3. [Intellij-Solidity](https://plugins.jetbrains.com/plugin/9475-intellij-solidity) IDE extension
 
 ### Installation
 

@@ -1,7 +1,6 @@
 package idrabenia.solhint.client
 
 import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType
 import com.intellij.notification.NotificationType.WARNING
 import com.intellij.notification.Notifications
 import com.intellij.openapi.application.ApplicationManager
@@ -10,22 +9,24 @@ import idrabenia.solhint.client.process.ServerProcess
 
 
 object Environment {
+    val isNodeAvailable = isNodeJsInstalled()
+    val isSolhintAvailable = isSolhintInstalled()
 
     init {
         validateDependencies()
     }
 
     fun validateDependencies() =
-        if (!isNodeJsInstalled()) {
+        if (!isNodeAvailable) {
             notifyThatNodeNotInstalled()
-        } else if (!isSolhintInstalled()) {
+        } else if (!isSolhintAvailable) {
             notifyThatSolhintNotInstalled()
         } else {
             // noop
         }
 
     fun solhintServer(baseDir: String) =
-        if (isSolhintInstalled()) {
+        if (isSolhintAvailable) {
             ServerProcess(baseDir)
         } else {
             EmptyProcess()
@@ -38,24 +39,20 @@ object Environment {
         canRunProcess("solhint")
 
     fun notifyThatNodeNotInstalled() =
-        notify(
-            "idrabenia.solidity-solhint",
+        warn(
             "Node.js is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Node.js",
-            WARNING
+            "For correct run of Solidity Solhint Plugin you need to install Node.js"
         )
 
     fun notifyThatSolhintNotInstalled() =
-        notify(
-            "idrabenia.solidity-solhint",
+        warn(
             "Solhint is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Solhint. Just run 'npm install -g solhint'",
-            WARNING
+            "For correct run of Solidity Solhint Plugin you need to install Solhint. Just run 'npm install -g solhint'"
         )
 
-    fun notify(id: String, title: String, message: String, type: NotificationType) =
+    fun warn(title: String, message: String) =
         if (ApplicationManager.getApplication() != null) {
-            Notifications.Bus.notify(Notification(id, title, message, type))
+            Notifications.Bus.notify(Notification("idrabenia.solidity-solhint", title, message, WARNING))
         } else {
             null
         }

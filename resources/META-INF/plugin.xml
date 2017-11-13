@@ -26,7 +26,6 @@
 
   <depends>com.intellij.modules.lang</depends>
 
-
   <extensions defaultExtensionNs="com.intellij">
     <localInspection language="Solidity" groupName="Solidity Solhint"
                      displayName="Solhint Warnings"

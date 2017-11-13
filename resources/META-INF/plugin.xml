@@ -1,17 +1,20 @@
 <idea-plugin version="2">
   <id>idrabenia.solidity-solhint</id>
   <name>Solidity Solhint</name>
-  <version>1.0</version>
+  <version>1.2</version>
   <vendor email="ilya.drobenya@gmail.com" url="http://protofire.io">ProtoFire</vendor>
 
-  <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
-    ]]></description>
+  <description>
+    <![CDATA[
+    Solidity Solhint Plugin allow to enable <a href="https://github.com/protofire/solhint">Solhint</a>
+    inspection capabilities in your project. It highlight of warnings / errors found by the linter in editor during
+    code modification.
+    ]]>
+  </description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      <em>Shutdown Solhint server on IDEA exit #5</em><br />
+      <em>Verify correctness of plugin run on Windows #2</em><br />
     ]]>
   </change-notes>
 

@@ -10,6 +10,7 @@ import idrabenia.solhint.client.SolhintClient
 
 abstract class Inspections : LocalInspectionTool() {
     private val solhintClient = SolhintClient()
+
     override fun getDisplayName() = "Solhint Errors"
 
     override fun checkFile(file: PsiFile, manager: InspectionManager, isOnTheFly: Boolean) =

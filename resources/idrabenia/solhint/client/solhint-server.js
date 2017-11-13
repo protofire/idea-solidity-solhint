@@ -8,7 +8,7 @@ const port = 3476;
 
 
 function solhint() {
-  if (os.platform().indexOf('win') >= 0) {
+  if (os.platform().indexOf('win') === 0) {
     return require(path.join(nodeBinPath, 'node_modules', 'solhint', 'lib', 'index'));
   } else {
     return require(path.join(nodeBinPath, 'lib', 'node_modules', 'solhint', 'lib', 'index'));

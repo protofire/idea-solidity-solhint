@@ -1,6 +1,7 @@
 package idrabenia.solhint.client
 
 import com.google.gson.Gson
+import idrabenia.solhint.client.process.AbstractSolhintProcess
 import idrabenia.solhint.errors.ErrorList
 import idrabenia.solhint.utils.IOUtils.toByteArray
 import java.net.URL
@@ -10,11 +11,11 @@ import java.nio.charset.Charset.forName
 
 class SolhintClient () {
     val gson = Gson()
-    var server: SolhintProcess? = null
+    var server: AbstractSolhintProcess? = null
 
     fun startServer(projectDir: String): SolhintClient =
         if (server == null || !server!!.isAlive()) {
-            server = SolhintProcess(projectDir)
+            server = Environment.solhintServer(projectDir)
             this
         } else {
             this

@@ -31,11 +31,9 @@ abstract class Inspections : LocalInspectionTool() {
     }
 }
 
-
 class ErrorInspections : Inspections() {
     override fun level() = "ERROR"
 }
-
 
 class WarnInspections : Inspections() {
     override fun level() = "WARNING"

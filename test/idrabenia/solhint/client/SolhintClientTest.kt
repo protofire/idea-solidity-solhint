@@ -21,11 +21,11 @@ class SolhintClientTest {
     fun `should correctly stop solhint server` () {
         val client = SolhintClient()
         client.startServer(".")
-        val process = client.server
+        val process = client.server!!
 
         client.stopServer()
 
-        waitToStop(process!!.process)
+        waitToStop(process.process)
         assert(!process.isAlive())
     }
 
@@ -43,8 +43,8 @@ class SolhintClientTest {
         client.stopServer()
     }
 
-    fun waitToStop(process: Process) {
-        while (process.isAlive) {
+    fun waitToStop(process: Process?) {
+        while (process != null && process.isAlive) {
             // wait
         }
     }

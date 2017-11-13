@@ -1,14 +1,14 @@
-package idrabenia.solhint.client
+package idrabenia.solhint.client.process
 
 import idrabenia.solhint.utils.IOUtils
 import java.io.File
 import java.io.InputStream
 
 
-class SolhintProcess(val baseDir: String) {
-    val process = start()
+class ServerProcess(val baseDir: String) : AbstractSolhintProcess {
+    override val process = start()
 
-    fun start(): Process =
+    fun start(): Process? =
         ProcessBuilder()
             .redirectInput(ProcessBuilder.Redirect.from(serverCodeFile()))
             .directory(File(baseDir))
@@ -16,11 +16,12 @@ class SolhintProcess(val baseDir: String) {
             .start()
             .killOnShutdown()
 
-    fun stop(): Process =
-        process.destroyForcibly()
+    override fun stop() {
+        process!!.destroyForcibly()
+    }
 
-    fun isAlive() =
-        process.isAlive
+    override fun isAlive() =
+        process != null && process.isAlive
 
     private fun serverCodeFile(): File =
         File

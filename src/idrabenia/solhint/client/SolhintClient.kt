@@ -2,8 +2,8 @@ package idrabenia.solhint.client
 
 import com.google.gson.Gson
 import idrabenia.solhint.client.process.AbstractSolhintProcess
+import idrabenia.solhint.utils.IoStreams.toByteArray
 import idrabenia.solhint.errors.ErrorList
-import idrabenia.solhint.utils.IOUtils.toByteArray
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.Charset.forName

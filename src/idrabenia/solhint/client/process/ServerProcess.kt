@@ -1,6 +1,6 @@
 package idrabenia.solhint.client.process
 
-import idrabenia.solhint.utils.IOUtils
+import idrabenia.solhint.utils.IoStreams.copy
 import java.io.File
 import java.io.InputStream
 
@@ -29,7 +29,7 @@ class ServerProcess(val baseDir: String) : AbstractSolhintProcess {
             .writeFrom(javaClass.getResourceAsStream("solhint-server.js"))
 
     private fun File.writeFrom(inputStream: InputStream): File {
-        IOUtils.copy(inputStream, this.outputStream())
+        copy(inputStream, this.outputStream())
         return this
     }
 

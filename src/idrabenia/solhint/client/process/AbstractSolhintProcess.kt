@@ -7,5 +7,4 @@ interface AbstractSolhintProcess {
     fun isAlive(): Boolean
 
     fun stop()
-
 }

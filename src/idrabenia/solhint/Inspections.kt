@@ -24,7 +24,7 @@ abstract class Inspections : LocalInspectionTool() {
     protected abstract fun level(): String
 
     private fun runSolhint(file: PsiFile, manager: InspectionManager) =
-            solhintClient.fileErrors(manager.project.baseDir.path, file.virtualFile.path)
+        solhintClient.fileErrors(manager.project.baseDir.path, file.virtualFile.path)
 
     private fun ProblemsHolder.addProblem(elem: PsiElement, text: String): ProblemsHolder {
         this.registerProblem(elem, text)

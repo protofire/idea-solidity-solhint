@@ -7,7 +7,7 @@ const url = require('url');
 const fs = require('fs');
 
 const configPath = path.join(process.cwd(), '.solhint.json');
-const port = 3476;
+const port = parseInt(process.argv.slice(2)[0]);
 var config = fs.existsSync(configPath) && readConfig();
 
 

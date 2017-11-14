@@ -28,7 +28,7 @@ class SolhintClient () {
 
     fun verifyFile(filePath: String) =
         try {
-            URL("http", "127.0.0.1", 3476, "?filePath=${URLEncoder.encode(filePath, "utf-8")}")
+            URL("http", "127.0.0.1", server!!.port, "?filePath=${urlEncode(filePath)}")
                 .openConnection()
                 .inputStream
                 .use {
@@ -43,4 +43,7 @@ class SolhintClient () {
 
     fun String.toErrorList(): ErrorList =
         gson.fromJson<ErrorList>(this, ErrorList::class.java)
+
+    private fun urlEncode(value: String) =
+        URLEncoder.encode(value, "utf-8")
 }

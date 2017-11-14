@@ -3,16 +3,17 @@ package idrabenia.solhint.client.process
 import idrabenia.solhint.utils.IoStreams.copy
 import java.io.File
 import java.io.InputStream
+import java.util.*
 
 
 class ServerProcess(val baseDir: String) : AbstractSolhintProcess {
+    override val port = 55000 + Random().nextInt(1000)
     override val process = start()
 
     fun start(): Process? =
         ProcessBuilder()
-            .redirectInput(ProcessBuilder.Redirect.from(serverCodeFile()))
             .directory(File(baseDir))
-            .command("node")
+            .command("node", serverCodeFile().absolutePath, port.toString())
             .start()
             .killOnShutdown()
 

@@ -2,7 +2,8 @@ package idrabenia.solhint.client.process
 
 
 class EmptyProcess() : AbstractSolhintProcess {
-    override val process: Process? = null
+    override val process = null
+    override val port = 55000
 
     override fun isAlive() = true
 

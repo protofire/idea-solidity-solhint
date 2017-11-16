@@ -33,4 +33,8 @@ class SettingsPage : Configurable {
     override fun reset() {
         view.nodePath = nodePath()
     }
+
+    override fun disposeUIResources() {
+        // noop
+    }
 }

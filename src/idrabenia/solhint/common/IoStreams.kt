@@ -1,4 +1,4 @@
-package idrabenia.solhint.utils
+package idrabenia.solhint.common
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException

@@ -1,9 +1,7 @@
 package idrabenia.solhint.client
 
-import com.intellij.notification.Notification
-import com.intellij.notification.NotificationType.WARNING
-import com.intellij.notification.Notifications
-import com.intellij.openapi.application.ApplicationManager
+import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
+import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
@@ -38,25 +36,6 @@ object Environment {
 
     fun isSolhintInstalled() =
         File(solhintPath()).exists()
-
-    fun notifyThatNodeNotInstalled() =
-        error(
-            "Node.js is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Node.js"
-        )
-
-    fun notifyThatSolhintNotInstalled() =
-        error(
-            "Solhint is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Solhint. Just run 'npm install -g solhint'"
-        )
-
-    fun error(title: String, message: String) =
-        if (ApplicationManager.getApplication() != null) {
-            Notifications.Bus.notify(Notification("idrabenia.solidity-solhint", title, message, WARNING))
-        } else {
-            null
-        }
 
     fun canRunProcess(cmd: String) =
         try {

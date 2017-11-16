@@ -2,6 +2,7 @@ package idrabenia.solhint.settings
 
 import com.intellij.openapi.options.Configurable
 import idrabenia.solhint.client.Environment
+import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import javax.swing.JComponent
@@ -22,6 +23,7 @@ class SettingsPage : Configurable {
         SettingsManager.setNodePath(view.nodePath)
 
         Environment.validateDependencies()
+        SolhintClient.stopServer()
     }
 
     override fun createComponent(): JComponent? {

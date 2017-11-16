@@ -9,21 +9,18 @@ class SolhintClientTest {
 
     @Test
     fun `should correctly start solhint server` () {
-        val client = SolhintClient()
+        SolhintClient.startServer(".")
 
-        client.startServer(".")
-
-        assert(client.server!!.isAlive())
-        client.stopServer()
+        assert(SolhintClient.server!!.isAlive())
+        SolhintClient.stopServer()
     }
 
     @Test
     fun `should correctly stop solhint server` () {
-        val client = SolhintClient()
-        client.startServer(".")
-        val process = client.server!!
+        SolhintClient.startServer(".")
+        val process = SolhintClient.server!!
 
-        client.stopServer()
+        SolhintClient.stopServer()
 
         waitToStop(process.process)
         assert(!process.isAlive())
@@ -31,7 +28,7 @@ class SolhintClientTest {
 
     @Test
     fun `should correctly verify solidity file` () {
-        val client = SolhintClient()
+        val client = SolhintClient
         client.startServer(".")
         val file = File.createTempFile("test", ".sol")
         Files.write(file.toPath(), arrayListOf("pragma solidity ^4.1.1"))

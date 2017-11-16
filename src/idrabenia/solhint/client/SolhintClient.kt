@@ -2,14 +2,14 @@ package idrabenia.solhint.client
 
 import com.google.gson.Gson
 import idrabenia.solhint.client.process.AbstractSolhintProcess
-import idrabenia.solhint.utils.IoStreams.toByteArray
+import idrabenia.solhint.common.IoStreams.toByteArray
 import idrabenia.solhint.errors.ErrorList
 import java.net.URL
 import java.net.URLEncoder
 import java.nio.charset.Charset.forName
 
 
-class SolhintClient () {
+object SolhintClient {
     val gson = Gson()
     var server: AbstractSolhintProcess? = null
 

@@ -1,6 +1,6 @@
 package idrabenia.solhint.client.process
 
-import idrabenia.solhint.utils.IoStreams.copy
+import idrabenia.solhint.common.IoStreams.copy
 import java.io.File
 import java.io.InputStream
 import java.util.*

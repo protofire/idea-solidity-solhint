@@ -1,6 +1,6 @@
 package idrabenia.solhint.settings.data
 
-import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.application.ApplicationManager.getApplication
 import idrabenia.solhint.client.Environment
 
 
@@ -21,8 +21,6 @@ object SettingsManager {
         repo().state
 
     private fun repo() =
-        ApplicationManager
-            .getApplication()
-            .getComponent(SettingsRepo::class.java)
+        getApplication()?.getComponent(SettingsRepo::class.java) ?: SettingsRepo()
 
 }

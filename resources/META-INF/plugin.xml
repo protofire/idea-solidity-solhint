@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>idrabenia.solidity-solhint</id>
   <name>Solidity Solhint</name>
-  <version>1.3</version>
+  <version>1.4</version>
   <vendor email="ilya.drobenya@gmail.com" url="http://protofire.io">ProtoFire</vendor>
 
   <description>
@@ -18,6 +18,7 @@
     <em>Implement error processing functionality for case when Solhint is not installed on user's machine #3</em><br />
     <em>Implement possibilities to run multiple instances of solvent server on same machine #6</em><br />
     <em>Implement support of config file watching in Solhint server #1</em><br />
+    <em>Settings is not saved to disk properly #7</em><br />
     ]]>
   </change-notes>
 

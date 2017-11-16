@@ -14,6 +14,9 @@ object SettingsManager {
         Environment.validateDependencies()
     }
 
+    fun solhintPath() =
+        nodePath().replace("node$", "solhint")
+
     private fun state() =
         repo().state
 

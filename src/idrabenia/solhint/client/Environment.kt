@@ -7,10 +7,11 @@ import com.intellij.openapi.application.ApplicationManager
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
+import idrabenia.solhint.settings.data.SettingsManager.solhintPath
+import java.io.File
 
 
 object Environment {
-    val isSolhintAvailable = isSolhintInstalled()
 
     init {
         validateDependencies()
@@ -19,14 +20,14 @@ object Environment {
     fun validateDependencies() =
         if (!isNodeJsInstalled()) {
             notifyThatNodeNotInstalled()
-        } else if (!isSolhintAvailable) {
+        } else if (!isSolhintInstalled()) {
             notifyThatSolhintNotInstalled()
         } else {
             // noop
         }
 
     fun solhintServer(baseDir: String) =
-        if (isSolhintAvailable) {
+        if (isSolhintInstalled()) {
             ServerProcess(nodePath(), baseDir)
         } else {
             EmptyProcess()
@@ -36,7 +37,7 @@ object Environment {
         canRunProcess("${nodePath()} -v")
 
     fun isSolhintInstalled() =
-        canRunProcess("solhint")
+        File(solhintPath()).exists()
 
     fun notifyThatNodeNotInstalled() =
         error(
@@ -63,4 +64,5 @@ object Environment {
         } catch (e: Exception) {
             false
         }
+
 }

@@ -22,7 +22,7 @@ object IdeMessages {
 
     fun error(title: String, message: String) =
         if (ApplicationManager.getApplication() != null) {
-            Notifications.Bus.notify(Notification("idrabenia.solidity-solhint", title, message, WARNING))
+            Notifications.Bus.notify(Notification("Solhint Messages", title, message, WARNING))
         } else {
             null
         }

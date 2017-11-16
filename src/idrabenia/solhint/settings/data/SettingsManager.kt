@@ -11,7 +11,6 @@ object SettingsManager {
 
     fun setNodePath(newPath: String) {
         repo().loadState(Settings(newPath))
-        Environment.validateDependencies()
     }
 
     fun solhintPath() =

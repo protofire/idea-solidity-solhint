@@ -1,7 +1,6 @@
 package idrabenia.solhint.settings.data
 
 import com.intellij.openapi.application.ApplicationManager.getApplication
-import idrabenia.solhint.client.Environment
 
 
 object SettingsManager {

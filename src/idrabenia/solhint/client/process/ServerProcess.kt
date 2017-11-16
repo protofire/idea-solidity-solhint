@@ -6,14 +6,14 @@ import java.io.InputStream
 import java.util.*
 
 
-class ServerProcess(val baseDir: String) : AbstractSolhintProcess {
+class ServerProcess(val nodePath: String, val baseDir: String) : AbstractSolhintProcess {
     override val port = 55000 + Random().nextInt(1000)
     override val process = start()
 
     fun start(): Process? =
         ProcessBuilder()
             .directory(File(baseDir))
-            .command("node", serverCodeFile().absolutePath, port.toString())
+            .command(nodePath, serverCodeFile(), port.toString())
             .start()
             .killOnShutdown()
 
@@ -24,10 +24,11 @@ class ServerProcess(val baseDir: String) : AbstractSolhintProcess {
     override fun isAlive() =
         process != null && process.isAlive
 
-    private fun serverCodeFile(): File =
+    private fun serverCodeFile() =
         File
             .createTempFile("solhint-server", ".js")
             .writeFrom(javaClass.getResourceAsStream("solhint-server.js"))
+            .absolutePath
 
     private fun File.writeFrom(inputStream: InputStream): File {
         copy(inputStream, this.outputStream())

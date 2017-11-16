@@ -6,10 +6,10 @@ import com.intellij.notification.Notifications
 import com.intellij.openapi.application.ApplicationManager
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
+import idrabenia.solhint.settings.data.SettingsManager.nodePath
 
 
 object Environment {
-    val isNodeAvailable = isNodeJsInstalled()
     val isSolhintAvailable = isSolhintInstalled()
 
     init {
@@ -17,7 +17,7 @@ object Environment {
     }
 
     fun validateDependencies() =
-        if (!isNodeAvailable) {
+        if (!isNodeJsInstalled()) {
             notifyThatNodeNotInstalled()
         } else if (!isSolhintAvailable) {
             notifyThatSolhintNotInstalled()
@@ -27,30 +27,30 @@ object Environment {
 
     fun solhintServer(baseDir: String) =
         if (isSolhintAvailable) {
-            ServerProcess(baseDir)
+            ServerProcess(nodePath(), baseDir)
         } else {
             EmptyProcess()
         }
 
     fun isNodeJsInstalled() =
-        canRunProcess("node -v")
+        canRunProcess("${nodePath()} -v")
 
     fun isSolhintInstalled() =
         canRunProcess("solhint")
 
     fun notifyThatNodeNotInstalled() =
-        warn(
+        error(
             "Node.js is not installed",
             "For correct run of Solidity Solhint Plugin you need to install Node.js"
         )
 
     fun notifyThatSolhintNotInstalled() =
-        warn(
+        error(
             "Solhint is not installed",
             "For correct run of Solidity Solhint Plugin you need to install Solhint. Just run 'npm install -g solhint'"
         )
 
-    fun warn(title: String, message: String) =
+    fun error(title: String, message: String) =
         if (ApplicationManager.getApplication() != null) {
             Notifications.Bus.notify(Notification("idrabenia.solidity-solhint", title, message, WARNING))
         } else {

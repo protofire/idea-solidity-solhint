@@ -12,9 +12,10 @@
     ]]>
   </description>
 
-  <change-notes><![CDATA[
-      <em>Shutdown Solhint server on IDEA exit #5</em><br />
-      <em>Verify correctness of plugin run on Windows #2</em><br />
+  <change-notes>
+    <![CDATA[
+    <em>Shutdown Solhint server on IDEA exit #5</em><br />
+    <em>Verify correctness of plugin run on Windows #2</em><br />
     ]]>
   </change-notes>
 
@@ -27,6 +28,10 @@
   <depends>com.intellij.modules.lang</depends>
 
   <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable groupId="tools"
+                             displayName="Solhint"
+                             instance="idrabenia.solhint.settings.SettingsPage"/>
+
     <localInspection language="Solidity" groupName="Solidity Solhint"
                      displayName="Solhint Warnings"
                      enabledByDefault="true"
@@ -41,6 +46,12 @@
                      runForWholeFile="true"
                      implementationClass="idrabenia.solhint.ErrorInspections"/>
   </extensions>
+
+  <application-components>
+    <component>
+      <implementation-class>idrabenia.solhint.settings.data.SettingsRepo</implementation-class>
+    </component>
+  </application-components>
 
   <actions>
     <!-- Add your actions here -->

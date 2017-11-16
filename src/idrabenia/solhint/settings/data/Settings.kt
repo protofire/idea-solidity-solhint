@@ -1,7 +1,7 @@
 package idrabenia.solhint.settings.data
 
 
-class Settings(val nodePath: String) {
+class Settings(var nodePath: String) {
 
     constructor(): this("node")
 

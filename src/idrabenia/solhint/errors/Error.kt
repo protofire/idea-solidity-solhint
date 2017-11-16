@@ -1,7 +1,7 @@
 package idrabenia.solhint.errors
 
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.PsiUtil
+import com.intellij.psi.util.PsiUtilCore
 
 
 class Error (val line: Int, val column: Int, val severity: Int, val message: String) {
@@ -17,7 +17,7 @@ class Error (val line: Int, val column: Int, val severity: Int, val message: Str
         }
 
     fun targetElem(file: PsiFile) =
-        PsiUtil.getElementAtOffset(file, offsetIn(file))
+        PsiUtilCore.getElementAtOffset(file, offsetIn(file))
 
     fun severityAsText() =
         if (this.severity == 3) {

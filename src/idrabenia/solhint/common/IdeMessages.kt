@@ -10,8 +10,8 @@ object IdeMessages {
 
     fun notifyThatNodeNotInstalled() =
         error(
-            "Node.js is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Node.js"
+            "Node.js is not found",
+            "Please provide correct path to Node.js on Settings > Tools > Solhint page"
         )
 
     fun notifyThatSolhintNotInstalled() =

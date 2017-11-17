@@ -1,6 +1,7 @@
 package idrabenia.solhint.settings.data
 
 import com.intellij.openapi.application.ApplicationManager.getApplication
+import java.io.File
 
 
 object SettingsManager {
@@ -13,7 +14,9 @@ object SettingsManager {
     }
 
     fun solhintPath() =
-        nodePath().replace("node$", "solhint")
+        File(nodePath())
+            .resolveSibling("solhint")
+            .absolutePath
 
     private fun state() =
         repo().state

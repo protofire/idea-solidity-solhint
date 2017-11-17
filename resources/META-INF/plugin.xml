@@ -16,6 +16,7 @@
     <![CDATA[
     <em>Settings is not saved to disk properly #7</em><br />
     <em>Solhint server does not starts on Windows #8</em><br />
+    <em>Implement advanced algorithm for find Node installations on user's machine #9</em> </br />
     ]]>
   </change-notes>
 

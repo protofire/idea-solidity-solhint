@@ -1,7 +1,7 @@
 const execSync = require('child_process').execSync;
 const path = require('path');
 const os = require('os');
-const nodeBinPath = process.argv[0].replace(/(bin)?[\/\\]?node$/, '')
+const nodeBinPath = process.argv[0].replace(/(bin)?[\/\\]?node(.exe)?$/, '')
 const http = require('http');
 const url = require('url');
 const fs = require('fs');

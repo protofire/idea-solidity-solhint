@@ -1,7 +1,10 @@
 package idrabenia.solhint.settings
 
 import com.intellij.openapi.options.Configurable
+import com.sun.javafx.sg.prism.NodePath
 import idrabenia.solhint.client.Environment
+import idrabenia.solhint.client.NodePathDetector
+import idrabenia.solhint.client.NodePathDetector.detectNodePath
 import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath

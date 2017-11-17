@@ -8,6 +8,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
+import idrabenia.solhint.client.NodePathDetector
 import java.awt.Insets
 import javax.swing.JComponent
 import javax.swing.JLabel
@@ -46,11 +47,12 @@ class SettingsView(val nodePathVal: String) {
     private fun makeNodeInterpreterField(): TextFieldWithHistoryWithBrowseButton {
         val field = TextFieldWithHistoryWithBrowseButton()
         field.name = "nodeInterpreterField"
+        field.text = nodePathVal
 
         val caption = "Select Node.js Executable"
         installFileCompletionAndBrowseDialog(null, field, caption, createSingleFileNoJarsDescriptor())
 
-        addHistoryOnExpansion(field.getChildComponent(), { arrayListOf(nodePathVal) })
+        addHistoryOnExpansion(field.childComponent, { NodePathDetector.detectAllNodePaths() })
 
         return field
     }

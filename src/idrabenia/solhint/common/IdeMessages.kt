@@ -15,13 +15,13 @@ object IdeMessages {
     fun notifyThatNodeNotInstalled() =
         error(
             "Node.js is not found",
-            "Please provide correct path to Node.js at Settings > Tools > Solhint page"
+            "Please provide correct path to Node.js"
         )
 
     fun notifyThatSolhintNotInstalled() =
         error(
             "Solhint is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Solhint. Just run 'npm install -g solhint'"
+            "For correct run of Solidity Solhint Plugin you need to install Solhint."
         )
 
     fun error(title: String, message: String) =

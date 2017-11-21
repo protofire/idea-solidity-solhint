@@ -3,7 +3,7 @@ package idrabenia.solhint.settings.data
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import idrabenia.solhint.client.NodePathDetector.detectNodePath
+import idrabenia.solhint.client.PathExecutableDetector.detectNodePath
 
 
 @State(

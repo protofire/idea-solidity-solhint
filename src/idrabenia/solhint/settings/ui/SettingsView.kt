@@ -1,4 +1,4 @@
-package idrabenia.solhint.settings
+package idrabenia.solhint.settings.ui
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory.createSingleFileNoJarsDescriptor
 import com.intellij.ui.TextFieldWithHistoryWithBrowseButton
@@ -8,14 +8,21 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
-import idrabenia.solhint.client.NodePathDetector
+import idrabenia.solhint.client.PathExecutableDetector
+import idrabenia.solhint.common.Debouncer
+import java.awt.EventQueue
 import java.awt.Insets
+import java.util.concurrent.TimeUnit.MILLISECONDS
+import java.util.function.Consumer
 import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 
-class SettingsView(val nodePathVal: String) {
+class SettingsView(val nodePathVal: String, val nodePathListener: Consumer<String>) {
+    val messagePanel = MessagePanel()
     val panel: JPanel = mainPanel()
     val nodeInterpreterField = findNodeFieldOf(panel)
 
@@ -41,6 +48,10 @@ class SettingsView(val nodePathVal: String) {
         panel.add(makeNodeInterpreterField(), GridConstraints(0, 1, 1, 1, ANCHOR_CENTER, FILL_HORIZONTAL,
                 SIZEPOLICY_WANT_GROW, SIZEPOLICY_FIXED, null, null, null, 0, false))
 
+        panel.add(messagePanel.panel, GridConstraints(1, 1, 1, 1, ANCHOR_CENTER, FILL_BOTH,
+                SIZEPOLICY_CAN_SHRINK or SIZEPOLICY_CAN_GROW, SIZEPOLICY_CAN_SHRINK or SIZEPOLICY_CAN_GROW,
+                null, null, null, 0, false))
+
         return panel
     }
 
@@ -49,10 +60,16 @@ class SettingsView(val nodePathVal: String) {
         field.name = "nodeInterpreterField"
         field.text = nodePathVal
 
+        field.childComponent.addDocumentListener(object : DocumentListener {
+            override fun changedUpdate(e: DocumentEvent?) = onNodePathChanged()
+            override fun insertUpdate(e: DocumentEvent?) = onNodePathChanged()
+            override fun removeUpdate(e: DocumentEvent?) = onNodePathChanged()
+        })
+
         val caption = "Select Node.js Executable"
         installFileCompletionAndBrowseDialog(null, field, caption, createSingleFileNoJarsDescriptor())
 
-        addHistoryOnExpansion(field.childComponent, { NodePathDetector.detectAllNodePaths() })
+        addHistoryOnExpansion(field.childComponent, { PathExecutableDetector.detectAllNodePaths() })
 
         return field
     }
@@ -66,6 +83,16 @@ class SettingsView(val nodePathVal: String) {
         label.toolTipText = "This path should point to node interpeter file path."
 
         return label
+    }
+
+    private fun onNodePathChanged() {
+        Debouncer.debounce("nodePathInput", processNodePathChanged(), 300, MILLISECONDS)
+    }
+
+    private fun processNodePathChanged() = Runnable {
+        EventQueue.invokeLater {
+            nodePathListener.accept(nodeInterpreterField.text)
+        }
     }
 
     private fun findByName(component: JComponent, name: String) =

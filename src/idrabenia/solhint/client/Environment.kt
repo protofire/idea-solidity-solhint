@@ -7,6 +7,8 @@ import idrabenia.solhint.client.process.ServerProcess
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.SECONDS
 
 
 object Environment {
@@ -32,14 +34,22 @@ object Environment {
         }
 
     fun isNodeJsInstalled() =
-        canRunProcess("${nodePath()} -v")
+        isNodeJsInstalled(nodePath())
+
+    fun isNodeJsInstalled(path: String) =
+        canRunProcess("$path -v")
 
     fun isSolhintInstalled() =
         File(solhintPath()).exists()
 
+    fun isSolhintInstalledInNode(nodePath: String) =
+        File(nodePath)
+            .resolveSibling("solhint")
+            .exists()
+
     fun canRunProcess(cmd: String) =
         try {
-            Runtime.getRuntime().exec(cmd).waitFor() == 0
+            Runtime.getRuntime().exec(cmd).waitFor(2, SECONDS)
         } catch (e: Exception) {
             false
         }

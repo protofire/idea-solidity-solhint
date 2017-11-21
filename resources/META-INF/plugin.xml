@@ -31,7 +31,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <applicationConfigurable groupId="tools"
                              displayName="Solhint"
-                             instance="idrabenia.solhint.settings.SettingsPage"/>
+                             instance="idrabenia.solhint.settings.ui.SettingsPage"/>
 
     <localInspection language="Solidity" groupName="Solidity Solhint"
                      displayName="Solhint Warnings"

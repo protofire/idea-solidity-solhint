@@ -5,7 +5,7 @@ import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInP
 import java.lang.System.getProperty
 
 
-object NodePathDetector {
+object PathExecutableDetector {
 
     fun detectNodePath() =
          nodeWithSolhint() ?: findInPath("node")?.absolutePath ?: "node"
@@ -19,6 +19,12 @@ object NodePathDetector {
             .firstOrNull()
             ?.absolutePath
 
+    fun detectSolhintPath() =
+        findInPath("solhint")
+
+    fun detectSolhintAllPaths() =
+        findAllExeFilesInPath("solhint").map { it.absolutePath }
+
     fun nodeBinName() =
         if (getProperty("os.name").contains("windows", true)) {
             "node.exe"
@@ -27,4 +33,3 @@ object NodePathDetector {
         }
 
 }
-

@@ -1,5 +1,6 @@
 package idrabenia.solhint.client
 
+import com.intellij.openapi.diagnostic.Logger
 import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
 import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.client.process.EmptyProcess
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 
 
 object Environment {
+    val LOG = Logger.getInstance(Environment::class.java)
 
     init {
         validateDependencies()
@@ -46,6 +48,20 @@ object Environment {
         File(nodePath)
             .resolveSibling("solhint")
             .exists()
+
+    fun installSolhint(nodePath: String) {
+        val npmPath = File(nodePath).resolveSibling("npm").absolutePath
+
+        try {
+            ProcessBuilder()
+                .directory(File(nodePath).parentFile)
+                .command(nodePath, npmPath, "install", "-g", "solhint")
+                .start()
+                .waitFor(5, TimeUnit.MINUTES)
+        } catch (e: Exception) {
+            LOG.warn("Could not install Solhint", e)
+        }
+    }
 
     fun canRunProcess(cmd: String) =
         try {

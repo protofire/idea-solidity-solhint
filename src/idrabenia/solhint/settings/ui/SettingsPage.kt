@@ -1,17 +1,19 @@
 package idrabenia.solhint.settings.ui
 
+import com.intellij.openapi.application.ApplicationManager.getApplication
 import com.intellij.openapi.options.Configurable
 import idrabenia.solhint.client.Environment
 import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.ui.MessagePanel.State.*
+import java.awt.EventQueue
 import java.util.function.Consumer
 import javax.swing.JComponent
 
 
 class SettingsPage : Configurable {
-    val view = SettingsView(nodePath(), Consumer<String> { onNodePathChanged(it) })
+    val view = SettingsView(nodePath(), Consumer<String> { onNodePathChanged(it) }, Runnable { installSolhint() })
 
     override fun getDisplayName() = "Solidity Solhint Settings"
 
@@ -52,6 +54,16 @@ class SettingsPage : Configurable {
         }
 
         messagePanel.setState(READY_TO_WORK)
+    }
+
+    fun installSolhint() {
+        view.messagePanel.setState(INSTALL_IN_PROGRESS)
+
+        getApplication().executeOnPooledThread {
+            Environment.installSolhint(view.nodePath)
+
+            EventQueue.invokeLater { onNodePathChanged(view.nodePath) }
+        }
     }
 
     override fun disposeUIResources() {

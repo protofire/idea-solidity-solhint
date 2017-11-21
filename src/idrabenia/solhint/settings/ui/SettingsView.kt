@@ -21,8 +21,11 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
 
-class SettingsView(val nodePathVal: String, val nodePathListener: Consumer<String>) {
-    val messagePanel = MessagePanel()
+class SettingsView(
+        val nodePathVal: String,
+        val nodePathListener: Consumer<String>,
+        val installSolhintButtonListener: Runnable) {
+    val messagePanel = MessagePanel(installSolhintButtonListener)
     val panel: JPanel = mainPanel()
     val nodeInterpreterField = findNodeFieldOf(panel)
 

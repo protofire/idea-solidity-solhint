@@ -15,7 +15,7 @@ object IdeMessages {
     fun notifyThatNodeNotInstalled() =
         error(
             "Node.js is not found",
-            "Please provide correct path to Node.js on Settings > Tools > Solhint page"
+            "Please provide correct path to Node.js at Settings > Tools > Solhint page"
         )
 
     fun notifyThatSolhintNotInstalled() =

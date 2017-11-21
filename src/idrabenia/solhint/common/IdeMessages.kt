@@ -39,10 +39,9 @@ object IdeMessages {
 private object FixIncorrectNodePathAction : AnAction("Fix") {
 
     override fun actionPerformed(e: AnActionEvent?) {
-        val settings = ShowSettingsUtil.getInstance()
-        val solhintSettingsPage = settings.findApplicationConfigurable(SettingsPage::class.java)
-
-        settings.editConfigurable(null, solhintSettingsPage, null)
+        ShowSettingsUtil
+            .getInstance()
+            .editConfigurable(null, SettingsPage(), null)
     }
 
 }

@@ -1,9 +1,14 @@
 package idrabenia.solhint.common
 
 import com.intellij.notification.Notification
+import com.intellij.notification.NotificationType.ERROR
 import com.intellij.notification.NotificationType.WARNING
 import com.intellij.notification.Notifications
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.options.ShowSettingsUtil
+import idrabenia.solhint.settings.ui.SettingsPage
 
 
 object IdeMessages {
@@ -22,9 +27,24 @@ object IdeMessages {
 
     fun error(title: String, message: String) =
         if (ApplicationManager.getApplication() != null) {
-            Notifications.Bus.notify(Notification("Solhint Messages", title, message, WARNING))
+            Notifications.Bus.notify(
+                Notification("Solhint Messages", title, message, ERROR)
+                    .addAction(FixIncorrectNodePathAction)
+                    .setImportant(true)
+            )
         } else {
             null
         }
+
+}
+
+private object FixIncorrectNodePathAction : AnAction("Fix") {
+
+    override fun actionPerformed(e: AnActionEvent?) {
+        val settings = ShowSettingsUtil.getInstance()
+        val solhintSettingsPage = settings.findApplicationConfigurable(SettingsPage::class.java)
+
+        settings.editConfigurable(null, solhintSettingsPage, null)
+    }
 
 }

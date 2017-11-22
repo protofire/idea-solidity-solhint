@@ -6,7 +6,7 @@ import com.intellij.openapi.extensions.PluginId
 /**
  * @author Ilya Drabenia
  */
-object SoliditySupportDetector {
+object SolidityPluginDetector {
 
     init {
         validateThatSolidityPluginInstalled()

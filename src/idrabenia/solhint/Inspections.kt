@@ -6,13 +6,12 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import idrabenia.solhint.client.SolhintClient
-import idrabenia.solhint.common.SoliditySupportDetector
+import idrabenia.solhint.common.SolidityPluginDetector
 
 
 abstract class Inspections : LocalInspectionTool() {
-
     init {
-        SoliditySupportDetector
+        SolidityPluginDetector
     }
 
     override fun getDisplayName() = "Solhint Errors"
@@ -34,7 +33,6 @@ abstract class Inspections : LocalInspectionTool() {
         this.registerProblem(elem, text)
         return this
     }
-
 }
 
 class ErrorInspections : Inspections() {

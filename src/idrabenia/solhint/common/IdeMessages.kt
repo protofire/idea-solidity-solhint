@@ -28,8 +28,9 @@ object IdeMessages {
     fun notifyThatSolidityPluginNotInstalled() =
         error(
             "Solidity Plugin is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install " +
-            "<a href=\"https://plugins.jetbrains.com/plugin/9475-intellij-solidity\">Solidity Plugin</a>",
+            "Please install " +
+            "<a href=\"https://plugins.jetbrains.com/plugin/9475-intellij-solidity\">Solidity Plugin</a>. \n" +
+            "It's required to correct evaluation of Solidity Solhint Extension",
             URL_OPENING_LISTENER
         )
 

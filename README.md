@@ -9,8 +9,8 @@ code modification.
 To correct evaluation of this plugin you may have installed:
 
 1. Node.js >= v6.9.1
-2. [Solhint](https://github.com/protofire/solhint =100x20). You may install it using command `npm install -g solhint`
-3. [Intellij-Solidity](https://plugins.jetbrains.com/plugin/9475-intellij-solidity =100x20) IDE extension
+2. [Solhint](https://github.com/protofire/solhint). You may install it using command `npm install -g solhint`
+3. [Intellij-Solidity](https://plugins.jetbrains.com/plugin/9475-intellij-solidity) IDE extension
 
 ### Installation
 
@@ -25,8 +25,8 @@ To install this plugin you need:
 
 ### Screenshots
 
-![Code Inspections](https://plugins.jetbrains.com/files/10177/screenshot_17520.png)
-![Settings Panel](https://plugins.jetbrains.com/files/10177/screenshot_17519.png)
+![Code Inspections](https://plugins.jetbrains.com/files/10177/screenshot_17520.png=200x100)
+![Settings Panel](https://plugins.jetbrains.com/files/10177/screenshot_17519.png=200x100)
 
 ### License
 MIT

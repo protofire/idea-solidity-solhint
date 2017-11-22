@@ -2,19 +2,27 @@ package idrabenia.solhint.common
 
 import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.extensions.PluginId
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.ProjectManager
+import com.intellij.openapi.project.ProjectManagerListener
 
 /**
  * @author Ilya Drabenia
  */
-object SolidityPluginDetector {
+class SolidityPluginDetector : ProjectManagerListener {
 
     init {
-        validateThatSolidityPluginInstalled()
+        ProjectManager
+            .getInstance()
+            .addProjectManagerListener(this)
     }
+
+    override fun projectOpened(project: Project?) =
+        validateThatSolidityPluginInstalled()
 
     private fun validateThatSolidityPluginInstalled() =
         if (!isSoliditySupportInstalled()) {
-            IdeMessages.notifyThatSolidityPluginNotInstalled()
+            IdeMessages.notifyThatSolidityPluginNotInstalled()!!
         } else {
             // noop
         }

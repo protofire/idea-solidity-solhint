@@ -10,10 +10,6 @@ import idrabenia.solhint.common.SolidityPluginDetector
 
 
 abstract class Inspections : LocalInspectionTool() {
-    init {
-        SolidityPluginDetector
-    }
-
     override fun getDisplayName() = "Solhint Errors"
 
     override fun checkFile(file: PsiFile, manager: InspectionManager, isOnTheFly: Boolean) =

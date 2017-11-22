@@ -6,6 +6,7 @@ import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
 import idrabenia.solhint.common.IoStreams
+import idrabenia.solhint.common.IoStreams.drain
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
@@ -53,15 +54,15 @@ object Environment {
 
     fun installSolhint(nodePath: String) =
         try {
-            val p = ProcessBuilder()
+            val process = ProcessBuilder()
                 .directory(File(nodePath).parentFile)
                 .command(nodePath, npmPath(File(nodePath)), "install", "-g", "solhint")
                 .start()
 
-            IoStreams.toByteArray(p.inputStream)
-            IoStreams.toByteArray(p.errorStream)
+            drain(process.inputStream)
+            drain(process.errorStream)
 
-            p.waitFor(5, TimeUnit.MINUTES)
+            process.waitFor(5, TimeUnit.MINUTES)
         } catch (e: Exception) {
             LOG.warn("Could not install Solhint", e)
         }

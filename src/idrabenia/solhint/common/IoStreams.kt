@@ -36,4 +36,9 @@ object IoStreams {
         return output.toByteArray()
     }
 
+    @Throws(IOException::class)
+    fun drain(input: InputStream) {
+        toByteArray(input)
+    }
+
 }

@@ -25,7 +25,10 @@ To install this plugin you need:
 
 ### Screenshots
 
+#### Code Inspection Capabilities
 ![Code Inspections](https://plugins.jetbrains.com/files/10177/screenshot_17520.png)
+
+#### Plugin Configuration Panel
 ![Settings Panel](https://plugins.jetbrains.com/files/10177/screenshot_17519.png)
 
 ### License

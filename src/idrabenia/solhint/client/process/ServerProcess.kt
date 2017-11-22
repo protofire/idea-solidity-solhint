@@ -28,10 +28,16 @@ class ServerProcess(val nodePath: String, val baseDir: String) : AbstractSolhint
         File
             .createTempFile("solhint-server", ".js")
             .writeFrom(javaClass.getResourceAsStream("solhint-server.js"))
+            .trashOnExit()
             .absolutePath
 
     private fun File.writeFrom(inputStream: InputStream): File {
         copy(inputStream, this.outputStream())
+        return this
+    }
+
+    private fun File.trashOnExit(): File {
+        this.deleteOnExit()
         return this
     }
 

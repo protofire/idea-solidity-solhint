@@ -1,11 +1,10 @@
 package idrabenia.solhint.client
 
 import com.intellij.openapi.diagnostic.Logger
-import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
-import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
-import idrabenia.solhint.common.IoStreams
+import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
+import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.common.IoStreams.drain
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath

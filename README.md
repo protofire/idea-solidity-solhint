@@ -25,8 +25,8 @@ To install this plugin you need:
 
 ### Screenshots
 
-![Code Inspections](https://plugins.jetbrains.com/files/10177/screenshot_17520.png =200x100)
-![Settings Panel](https://plugins.jetbrains.com/files/10177/screenshot_17519.png =200x100)
+![Code Inspections](https://plugins.jetbrains.com/files/10177/screenshot_17520.png | width=150)
+![Settings Panel](https://plugins.jetbrains.com/files/10177/screenshot_17519.png | width=150)
 
 ### License
 MIT

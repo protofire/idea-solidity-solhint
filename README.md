@@ -6,7 +6,7 @@ code modification.
 
 ### Prerequisite
 
-To correct evaluation of this plugin you may have installed:
+To correct evaluation of this plugin you must to have installed:
 
 1. Node.js >= v6.9.1
 2. [Solhint](https://github.com/protofire/solhint). You may install it using command `npm install -g solhint`

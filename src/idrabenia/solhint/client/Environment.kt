@@ -5,9 +5,11 @@ import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
 import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
+import idrabenia.solhint.common.IoStreams
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
+import java.lang.System.getProperty
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.SECONDS
 
@@ -49,25 +51,38 @@ object Environment {
             .resolveSibling("solhint")
             .exists()
 
-    fun installSolhint(nodePath: String) {
-        val npmPath = File(nodePath).resolveSibling("npm").absolutePath
-
+    fun installSolhint(nodePath: String) =
         try {
-            ProcessBuilder()
+            val p = ProcessBuilder()
                 .directory(File(nodePath).parentFile)
-                .command(nodePath, npmPath, "install", "-g", "solhint")
+                .command(nodePath, npmPath(File(nodePath)), "install", "-g", "solhint")
                 .start()
-                .waitFor(5, TimeUnit.MINUTES)
+
+            IoStreams.toByteArray(p.inputStream)
+            IoStreams.toByteArray(p.errorStream)
+
+            p.waitFor(5, TimeUnit.MINUTES)
         } catch (e: Exception) {
             LOG.warn("Could not install Solhint", e)
         }
-    }
 
     fun canRunProcess(cmd: String) =
         try {
             Runtime.getRuntime().exec(cmd).waitFor(2, SECONDS)
         } catch (e: Exception) {
             false
+        }
+
+    fun npmPath(nodeFile: File) =
+        if (!getProperty("os.name").contains("windows", true)) {
+            nodeFile
+                .resolveSibling("npm")
+                .absolutePath
+        } else {
+            nodeFile
+                .parentFile
+                .resolve("node_modules/npm/bin/npm-cli.js")
+                .absolutePath
         }
 
 }

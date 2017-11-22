@@ -1,6 +1,6 @@
 package idrabenia.solhint.settings.data
 
-import idrabenia.solhint.client.PathExecutableDetector.detectNodePath
+import idrabenia.solhint.client.NodePathDetector.detectNodePath
 
 
 class Settings(var nodePath: String) {

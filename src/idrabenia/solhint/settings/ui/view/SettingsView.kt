@@ -8,7 +8,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
-import idrabenia.solhint.client.PathExecutableDetector
+import idrabenia.solhint.client.NodePathDetector
 import idrabenia.solhint.common.Debouncer
 import idrabenia.solhint.settings.ui.view.MessagePanel
 import java.awt.EventQueue
@@ -73,7 +73,7 @@ class SettingsView(
         val caption = "Select Node.js Executable"
         installFileCompletionAndBrowseDialog(null, field, caption, createSingleFileNoJarsDescriptor())
 
-        addHistoryOnExpansion(field.childComponent, { PathExecutableDetector.detectAllNodePaths() })
+        addHistoryOnExpansion(field.childComponent, { NodePathDetector.detectAllNodePaths() })
 
         return field
     }

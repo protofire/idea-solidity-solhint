@@ -1,4 +1,4 @@
-package idrabenia.solhint.settings.ui;
+package idrabenia.solhint.settings.ui.view;
 
 import com.intellij.ui.TextFieldWithHistoryWithBrowseButton;
 import com.intellij.uiDesigner.core.GridConstraints;

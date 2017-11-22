@@ -6,7 +6,8 @@ import idrabenia.solhint.client.Environment
 import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
-import idrabenia.solhint.settings.ui.MessagePanel.State.*
+import idrabenia.solhint.settings.ui.view.MessagePanel.State.*
+import idrabenia.solhint.settings.ui.view.SettingsView
 import java.awt.EventQueue
 import java.util.function.Consumer
 import javax.swing.JComponent

@@ -1,10 +1,10 @@
-package idrabenia.solhint.settings.ui
+package idrabenia.solhint.settings.ui.view
 
 import com.intellij.uiDesigner.core.GridConstraints
 import com.intellij.uiDesigner.core.GridConstraints.*
 import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
-import idrabenia.solhint.settings.ui.MessagePanel.State.*
+import idrabenia.solhint.settings.ui.view.MessagePanel.State.*
 import java.awt.Color
 import java.awt.Font
 import java.awt.Insets

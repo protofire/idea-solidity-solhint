@@ -1,15 +1,10 @@
 package idrabenia.solhint.common
 
 import com.intellij.notification.Notification
-import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType.ERROR
 import com.intellij.notification.Notifications
-import com.intellij.openapi.actionSystem.AnAction
-import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.application.ApplicationManager.getApplication
-import com.intellij.openapi.options.ShowSettingsUtil
-import idrabenia.solhint.settings.ui.SettingsPage
-import javax.swing.event.HyperlinkEvent
+import idrabenia.solhint.settings.ui.OpenSettingsListener
 
 
 object IdeMessages {
@@ -34,27 +29,5 @@ object IdeMessages {
     fun errorNotification(title: String, message: String): Notification =
         Notification("Solhint Messages", title, message, ERROR, OpenSettingsListener)
             .setImportant(true)
-
-}
-
-
-private object OpenSettingsListener : NotificationListener.Adapter() {
-
-    override fun hyperlinkActivated(notification: Notification, event: HyperlinkEvent) {
-        ShowSettingsUtil
-            .getInstance()
-            .editConfigurable(null, SettingsPage(), null)
-    }
-
-}
-
-
-private object FixIncorrectNodePathAction : AnAction("Fix") {
-
-    override fun actionPerformed(e: AnActionEvent?) {
-        ShowSettingsUtil
-            .getInstance()
-            .editConfigurable(null, SettingsPage(), null)
-    }
 
 }

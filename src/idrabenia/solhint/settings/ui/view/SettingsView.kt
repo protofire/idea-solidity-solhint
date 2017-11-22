@@ -1,4 +1,4 @@
-package idrabenia.solhint.settings.ui
+package idrabenia.solhint.settings.ui.view
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory.createSingleFileNoJarsDescriptor
 import com.intellij.ui.TextFieldWithHistoryWithBrowseButton
@@ -10,6 +10,7 @@ import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
 import idrabenia.solhint.client.PathExecutableDetector
 import idrabenia.solhint.common.Debouncer
+import idrabenia.solhint.settings.ui.view.MessagePanel
 import java.awt.EventQueue
 import java.awt.Insets
 import java.util.concurrent.TimeUnit.MILLISECONDS

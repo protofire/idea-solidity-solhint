@@ -9,16 +9,14 @@ import com.intellij.openapi.project.ProjectManagerListener
 /**
  * @author Ilya Drabenia
  */
-class SolidityPluginDetector : ProjectManagerListener {
+class SolidityPluginDetector {
 
     init {
-        ProjectManager
-            .getInstance()
-            .addProjectManagerListener(this)
+        ProjectManager.getInstance()
+            .addProjectManagerListener(DetectorProjectListener({
+                validateThatSolidityPluginInstalled()
+            }))
     }
-
-    override fun projectOpened(project: Project?) =
-        validateThatSolidityPluginInstalled()
 
     private fun validateThatSolidityPluginInstalled() =
         if (!isSoliditySupportInstalled()) {
@@ -32,5 +30,12 @@ class SolidityPluginDetector : ProjectManagerListener {
             .getPlugins()
             .filter { it.pluginId == PluginId.getId("me.serce.solidity") && it.isEnabled }
             .any()
+
+    open class DetectorProjectListener(val listener: () -> Unit) : ProjectManagerListener {
+        override fun projectClosing(project: Project?) { /* noop */ }
+        override fun projectClosed(project: Project?) { /* noop */ }
+        override fun canCloseProject(project: Project?): Boolean = true
+        override fun projectOpened(project: Project?) = listener.invoke()
+    }
 
 }

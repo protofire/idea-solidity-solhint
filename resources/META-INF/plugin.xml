@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>idrabenia.solidity-solhint</id>
   <name>Solidity Solhint</name>
-  <version>1.8</version>
+  <version>1.9</version>
   <vendor email="ilya.drobenya@gmail.com" url="http://protofire.io">ProtoFire</vendor>
 
   <description>
@@ -14,7 +14,7 @@
 
   <change-notes>
     <![CDATA[
-    <h3>v1.8 Changelog</h3><br />
+    <h3>v1.9 Changelog</h3><br />
     <em>Implement cleaning of temporary Solhint files on IDE exit #16</em><br />
     <em>Implement error notification when Intellij Solidity plugin is not installed #15</em><br />
     <em>Verify of settings page work correctness on Windows #14</em><br />

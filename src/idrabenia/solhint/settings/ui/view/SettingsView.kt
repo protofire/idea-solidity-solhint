@@ -10,7 +10,6 @@ import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
 import idrabenia.solhint.client.NodePathDetector
 import idrabenia.solhint.common.Debouncer
-import idrabenia.solhint.settings.ui.view.MessagePanel
 import java.awt.EventQueue
 import java.awt.Insets
 import java.util.concurrent.TimeUnit.MILLISECONDS

@@ -5,10 +5,7 @@ import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.impl.source.tree.LeafPsiElement
-import com.intellij.psi.tree.IElementType
 import idrabenia.solhint.client.SolhintClient
-import idrabenia.solhint.common.SolidityPluginDetector
 
 
 abstract class Inspections : LocalInspectionTool() {

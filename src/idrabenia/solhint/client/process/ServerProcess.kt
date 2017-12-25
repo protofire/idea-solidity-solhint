@@ -6,14 +6,14 @@ import java.io.InputStream
 import java.util.*
 
 
-class ServerProcess(val nodePath: String, val baseDir: String) : AbstractSolhintProcess {
+class ServerProcess(val nodePath: String, val solhintPath: String, val baseDir: String) : AbstractSolhintProcess {
     override val port = 55000 + Random().nextInt(1000)
     override val process = start()
 
     fun start(): Process? =
         ProcessBuilder()
             .directory(File(baseDir))
-            .command(nodePath, serverCodeFile(), port.toString())
+            .command(nodePath, serverCodeFile(), solhintPath, port.toString())
             .start()
             .killOnShutdown()
 

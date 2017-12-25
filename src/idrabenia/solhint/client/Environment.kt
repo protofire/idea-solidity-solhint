@@ -11,6 +11,7 @@ import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
 import java.lang.System.getProperty
+import java.nio.file.Path
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.SECONDS
 
@@ -33,7 +34,7 @@ object Environment {
 
     fun solhintServer(baseDir: String) =
         if (isSolhintInstalled()) {
-            ServerProcess(nodePath(), baseDir)
+            ServerProcess(nodePath(), solhintRealPath(), baseDir)
         } else {
             EmptyProcess()
         }
@@ -55,6 +56,9 @@ object Environment {
 
     fun solhintNodeRelativePath(nodePath: String) =
         File(nodePath).resolveSibling("solhint")
+
+    fun solhintRealPath() =
+        File(solhintPath()).toPath().toRealPath().toFile().absolutePath
 
     fun installSolhint(nodePath: String) =
         try {

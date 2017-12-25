@@ -1,22 +1,19 @@
 const execSync = require('child_process').execSync;
 const path = require('path');
 const os = require('os');
-const nodeBinPath = process.argv[0].replace(/(bin)?[\/\\]?node(.exe)?$/, '')
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
 
 const configPath = path.join(process.cwd(), '.solhint.json');
-const port = parseInt(process.argv.slice(2)[0]);
+const solhintPath = process.argv.slice(2)[0];
+const port = parseInt(process.argv.slice(2)[1]);
 var config = fs.existsSync(configPath) && readConfig();
 
 
 function solhint() {
-  if (os.platform().indexOf('win') === 0) {
-    return require(path.join(nodeBinPath, 'node_modules', 'solhint', 'lib', 'index'));
-  } else {
-    return require(path.join(nodeBinPath, 'lib', 'node_modules', 'solhint', 'lib', 'index'));
-  }
+  const solhintDirPath = solhintPath.replace(/[\/\\]?solhint\.js?$/, '');
+  return require(path.join(solhintDirPath, 'lib', 'index'));
 }
 
 function watchConfig() {

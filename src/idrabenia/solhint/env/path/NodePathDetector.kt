@@ -5,20 +5,19 @@ import java.lang.System.getProperty
 
 object NodePathDetector : BasePathDetector() {
 
+    private val nodeFileName: String
+        get() = if (isWindows()) "node.exe" else "node"
+
     fun detectNodePath() =
-         nodeWithSolhint() ?: detectPath(nodeBinName()) ?: "node"
+         nodeWithSolhint() ?: detectPath(nodeFileName) ?: "node"
 
     fun detectAllNodePaths() =
-        detectAllInPaths(nodeBinName())
+        detectAllInPaths(nodeFileName)
 
     fun nodeWithSolhint() =
-        detectWithFilter(nodeBinName(), { it.resolveSibling("solhint").exists() })
+        detectWithFilter(nodeFileName) { it.resolveSibling("solhint").exists() }
 
-    fun nodeBinName() =
-        if (getProperty("os.name").contains("windows", true)) {
-            "node.exe"
-        } else {
-            "node"
-        }
+    private fun isWindows() =
+        getProperty("os.name").contains("windows", true)
 
 }

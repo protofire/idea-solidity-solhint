@@ -5,16 +5,15 @@ import java.io.File
 
 object SolhintPathDetector : BasePathDetector() {
 
+    private val solhintName = "solhint"
+
     fun detectSolhintPath(nodePath: String) =
-        solhintForNode(nodePath) ?: detectPath(solhintName()) ?: ""
+        solhintForNode(nodePath) ?: detectPath(solhintName) ?: ""
 
     fun detectAllSolhintPaths() =
-        detectAllInPaths(solhintName())
+        detectAllInPaths(solhintName)
 
     fun solhintForNode(nodePath: String) =
-        detectWithFilter(solhintName(), { it.startsWith(File(nodePath).parent) })
-
-    fun solhintName() =
-        "solhint"
+        detectWithFilter(solhintName, { it.startsWith(File(nodePath).parent) })
 
 }

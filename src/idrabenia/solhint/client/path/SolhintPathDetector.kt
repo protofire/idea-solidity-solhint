@@ -16,9 +16,9 @@ object SolhintPathDetector {
 
     fun solhintForNode(nodePath: String) =
         findAllExeFilesInPath(solhintName())
-                .filter { it.startsWith(File(nodePath).parent) }
-                .firstOrNull()
-                ?.absolutePath
+            .filter { it.startsWith(File(nodePath).parent) }
+            .firstOrNull()
+            ?.absolutePath
 
     fun solhintName() =
         "solhint"

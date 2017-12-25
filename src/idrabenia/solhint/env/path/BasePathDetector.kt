@@ -5,7 +5,7 @@ import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInP
 import java.io.File
 
 
-open class PathDetector {
+open class BasePathDetector {
 
     fun detectPath(cmdName: String) =
         findInPath(cmdName)?.absolutePath

@@ -1,11 +1,9 @@
 package idrabenia.solhint.env.path
 
-import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findAllExeFilesInPath
-import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInPath
 import java.lang.System.getProperty
 
 
-object NodePathDetector : PathDetector() {
+object NodePathDetector : BasePathDetector() {
 
     fun detectNodePath() =
          nodeWithSolhint() ?: detectPath(nodeBinName()) ?: "node"

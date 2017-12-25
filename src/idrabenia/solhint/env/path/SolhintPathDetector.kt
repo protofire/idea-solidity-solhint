@@ -3,7 +3,7 @@ package idrabenia.solhint.env.path
 import java.io.File
 
 
-object SolhintPathDetector : PathDetector() {
+object SolhintPathDetector : BasePathDetector() {
 
     fun detectSolhintPath(nodePath: String) =
         solhintForNode(nodePath) ?: detectPath(solhintName()) ?: ""

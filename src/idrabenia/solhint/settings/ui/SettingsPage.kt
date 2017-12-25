@@ -3,9 +3,16 @@ package idrabenia.solhint.settings.ui
 import com.intellij.openapi.application.ApplicationManager.getApplication
 import com.intellij.openapi.options.Configurable
 import idrabenia.solhint.client.Environment
+import idrabenia.solhint.client.Environment.isCorrectSolhintPath
+import idrabenia.solhint.client.Environment.isSolhintInstalledInNode
+import idrabenia.solhint.client.Environment.solhintNodeRelativePath
 import idrabenia.solhint.client.SolhintClient
+import idrabenia.solhint.client.path.SolhintPathDetector
+import idrabenia.solhint.client.path.SolhintPathDetector.detectAllSolhintPaths
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
+import idrabenia.solhint.settings.data.SettingsManager.solhintPath
+import idrabenia.solhint.settings.ui.view.MessagePanel
 import idrabenia.solhint.settings.ui.view.MessagePanel.State.*
 import idrabenia.solhint.settings.ui.view.SettingsView
 import java.awt.EventQueue
@@ -14,18 +21,25 @@ import javax.swing.JComponent
 
 
 class SettingsPage : Configurable {
-    val view = SettingsView(nodePath(), Consumer<String> { onNodePathChanged(it) }, Runnable { installSolhint() })
+    val view = SettingsView(
+        nodePath(),
+        solhintPath(),
+        Consumer<String> { onNodePathChanged(it) },
+        Consumer<String> { onSolhintPathChanged(it) },
+        Runnable { installSolhint() }
+    )
 
     override fun getDisplayName() = "Solidity Solhint Settings"
 
     override fun getHelpTopic() = "There is page that allow to configure Solidity Solhint Plugin"
 
     override fun isModified(): Boolean {
-        return nodePath() != view.nodePath
+        return nodePath() != view.nodePath || solhintPath() != view.solhintPath
     }
 
     override fun apply() {
         SettingsManager.setNodePath(view.nodePath)
+        SettingsManager.setSolhintPath(view.solhintPath)
 
         Environment.validateDependencies()
         SolhintClient.stopServer()
@@ -39,26 +53,39 @@ class SettingsPage : Configurable {
 
     override fun reset() {
         view.nodePath = nodePath()
+        view.solhintPath = solhintPath()
     }
 
-    fun onNodePathChanged(value: String) {
-        val messagePanel = view.messagePanel
-
-        if (!Environment.isNodeJsInstalled(value)) {
-            messagePanel.setState(INCORRECT)
-            return
+    fun onNodePathChanged(newNodePath: String) {
+        if (isSolhintInstalledInNode(newNodePath)) {
+            view.solhintPath = solhintNodeRelativePath(newNodePath).absolutePath
         }
 
-        if (!Environment.isSolhintInstalledInNode(value)) {
-            messagePanel.setState(INSTALL_REQUIRED)
-            return
-        }
-
-        messagePanel.setState(READY_TO_WORK)
+        validateSolhintPath(view.solhintPath)
+        validateNodePath(newNodePath)
     }
+
+    fun onSolhintPathChanged(newSolhintPath: String): Unit =
+        validateSolhintPath(newSolhintPath)
+
+    private fun validateSolhintPath(solhintPath: String) =
+        if (detectAllSolhintPaths().isEmpty()) {
+            view.setMessage(INSTALL_REQUIRED)
+        } else if (isCorrectSolhintPath(solhintPath)) {
+            view.setMessage(READY_TO_WORK)
+        } else {
+            view.setMessage(SOLHINT_INCORRECT)
+        }
+
+    private fun validateNodePath(nodePath: String) =
+        if (!Environment.isNodeJsInstalled(nodePath)) {
+            view.setMessage(INCORRECT)
+        } else {
+            view.setMessage(READY_TO_WORK)
+        }
 
     fun installSolhint() {
-        view.messagePanel.setState(INSTALL_IN_PROGRESS)
+        view.setMessage(INSTALL_IN_PROGRESS)
 
         getApplication().executeOnPooledThread {
             Environment.installSolhint(view.nodePath)

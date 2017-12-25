@@ -1,5 +1,6 @@
 package idrabenia.solhint.client
 
+import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInPath
 import com.intellij.openapi.diagnostic.Logger
 import idrabenia.solhint.client.process.EmptyProcess
 import idrabenia.solhint.client.process.ServerProcess
@@ -44,12 +45,16 @@ object Environment {
         canRunProcess("$path -v")
 
     fun isSolhintInstalled() =
-        File(solhintPath()).exists()
+        isCorrectSolhintPath(solhintPath())
+
+    fun isCorrectSolhintPath(solhintPath: String) =
+        solhintPath.endsWith("solhint") && File(solhintPath).exists()
 
     fun isSolhintInstalledInNode(nodePath: String) =
-        File(nodePath)
-            .resolveSibling("solhint")
-            .exists()
+        solhintNodeRelativePath(nodePath).exists()
+
+    fun solhintNodeRelativePath(nodePath: String) =
+        File(nodePath).resolveSibling("solhint")
 
     fun installSolhint(nodePath: String) =
         try {
@@ -79,10 +84,25 @@ object Environment {
                 .resolveSibling("npm")
                 .absolutePath
         } else {
-            nodeFile
-                .parentFile
-                .resolve("node_modules/npm/bin/npm-cli.js")
-                .absolutePath
+            npmPathOnWin(nodeFile)
         }
 
+    fun npmPathOnWin(nodeFile: File): String {
+        val nodeRelatedPath = npmCliJsAt(nodeFile).absolutePath;
+
+        if (File(nodeRelatedPath).exists()) {
+            return nodeRelatedPath;
+        } else {
+            val npmPath = findInPath("npm")
+
+            if (npmPath != null && npmCliJsAt(npmPath).exists()) {
+                return npmCliJsAt(npmPath).absolutePath
+            } else {
+                return nodeRelatedPath
+            }
+        }
+    }
+
+    fun npmCliJsAt(file: File) =
+        file.parentFile.resolve("node_modules/npm/bin/npm-cli.js")
 }

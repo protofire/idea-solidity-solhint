@@ -15,7 +15,9 @@ import javax.swing.JPanel
 
 
 class MessagePanel(val installSolhintButtonListener: Runnable) {
-    enum class State { HIDE_ALL, INCORRECT, INSTALL_REQUIRED, INSTALL_IN_PROGRESS, READY_TO_WORK }
+    enum class State {
+        HIDE_ALL, INCORRECT, SOLHINT_INCORRECT, INSTALL_REQUIRED, INSTALL_IN_PROGRESS, READY_TO_WORK
+    }
 
     val panel = mainPanel()
 
@@ -23,6 +25,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
     val installSolhintMessage = findByName(panel, "installSolhintMessage") as JPanel
     val solhintInstallInProgressMessage = findByName(panel, "solhintInstallInProgressMessage") as JLabel
     val readyMessage = findByName(panel, "readMessage") as JLabel
+    val solhintPathIncorrectMessage = findByName(panel, "solhintPathIncorrectMessage") as JLabel
 
     fun setState(state: State) {
         hideAllMessages()
@@ -32,6 +35,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
             INSTALL_REQUIRED -> installSolhintMessage
             INSTALL_IN_PROGRESS -> solhintInstallInProgressMessage
             READY_TO_WORK -> readyMessage
+            SOLHINT_INCORRECT -> solhintPathIncorrectMessage
             else -> JPanel()
         }
 
@@ -41,7 +45,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
     private fun mainPanel(): JPanel {
         val panel = JPanel()
 
-        panel.layout = GridLayoutManager(5, 1, Insets(0, 0, 0, 0), -1, -1)
+        panel.layout = GridLayoutManager(6, 1, Insets(0, 0, 0, 0), -1, -1)
 
         panel.add(Spacer(), GridConstraints(4, 0, 1, 1, ANCHOR_CENTER, FILL_VERTICAL, 1, SIZEPOLICY_WANT_GROW,
                 null, null, null, 0, false))
@@ -59,6 +63,9 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
         panel.add(readyToWorkMessage(), GridConstraints(3, 0, 1, 1, ANCHOR_WEST, FILL_NONE, SIZEPOLICY_FIXED,
                 SIZEPOLICY_FIXED, null, null, null, 0, false))
 
+        panel.add(solhintPathIncorrectLabel(), GridConstraints(4, 0, 1, 1, ANCHOR_WEST, FILL_NONE, SIZEPOLICY_FIXED,
+                SIZEPOLICY_FIXED, null, null, null, 0, false))
+
         return panel
     }
 
@@ -74,6 +81,18 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
         return label
     }
 
+    private fun solhintPathIncorrectLabel(): JLabel {
+        val label = JLabel()
+
+        label.name = "solhintPathIncorrectMessage"
+        label.font = Font(label.getFont().getName(), Font.ITALIC, label.getFont().getSize())
+        label.foreground = Color(-1623760)
+        label.text = "Path to Solhint is incorrect"
+        label.isVisible = false
+
+        return label
+    }
+
     private fun installSolhintPanel(): JPanel {
         val panel = JPanel()
 
@@ -84,7 +103,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
         val label = JLabel()
         label.font = Font(label.font.name, Font.ITALIC, label.font.size)
         label.foreground = Color(-1623760)
-        label.text = "Solhint package is not found for specified Node.js installation"
+        label.text = "Solhint package is not found"
         panel.add(label, GridConstraints(0, 0, 1, 1, ANCHOR_WEST, FILL_NONE, SIZEPOLICY_FIXED, SIZEPOLICY_FIXED,
                 null, null, null, 0, false))
 
@@ -125,6 +144,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
         pathIncorrectMessage.isVisible = false
         installSolhintMessage.isVisible = false
         solhintInstallInProgressMessage.isVisible = false
+        solhintPathIncorrectMessage.isVisible = false
         readyMessage.isVisible = false
     }
 

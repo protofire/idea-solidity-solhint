@@ -16,6 +16,8 @@ public class SettingsForm1 {
     private TextFieldWithHistoryWithBrowseButton nodeInterpreterField;
     private JLabel pathIncorrectLabel;
     private JButton installSolhintButton;
+    private JLabel solhintFieldLabel;
+    private TextFieldWithHistoryWithBrowseButton solhintPathField;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("SettingsForm1");
@@ -41,25 +43,19 @@ public class SettingsForm1 {
      */
     private void $$$setupUI$$$() {
         panel = new JPanel();
-        panel.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel.setEnabled(true);
+        panel.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         final Spacer spacer1 = new Spacer();
-        panel.add(spacer1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel.add(spacer1, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
-        label1.setText("Node.js Binary");
-        label1.setDisplayedMnemonic('N');
-        label1.setDisplayedMnemonicIndex(0);
-        label1.setToolTipText("This path should point to node interpeter file path.");
         panel.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         nodeInterpreterField = new TextFieldWithHistoryWithBrowseButton();
         panel.add(nodeInterpreterField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel.add(panel1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel.add(panel1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         pathIncorrectLabel = new JLabel();
         pathIncorrectLabel.setFont(new Font(pathIncorrectLabel.getFont().getName(), Font.ITALIC, pathIncorrectLabel.getFont().getSize()));
         pathIncorrectLabel.setForeground(new Color(-1623760));
-        pathIncorrectLabel.setText("Path to Node.js binary is incorrect");
         panel1.add(pathIncorrectLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel1.add(spacer2, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -69,21 +65,21 @@ public class SettingsForm1 {
         final JLabel label2 = new JLabel();
         label2.setFont(new Font(label2.getFont().getName(), Font.ITALIC, label2.getFont().getSize()));
         label2.setForeground(new Color(-1623760));
-        label2.setText("Solhint package is not found for specified Node.js installation");
         panel2.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         installSolhintButton = new JButton();
-        installSolhintButton.setText("Install Solhint");
         panel2.add(installSolhintButton, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setFont(new Font(label3.getFont().getName(), Font.ITALIC, label3.getFont().getSize()));
         label3.setForeground(new Color(-12543001));
-        label3.setText("Installing Solhint. Please Wait...");
         panel1.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
         label4.setFont(new Font(label4.getFont().getName(), Font.BOLD, label4.getFont().getSize()));
         label4.setForeground(new Color(-11940505));
-        label4.setText("Solhint plugin ready to work!");
         panel1.add(label4, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        solhintFieldLabel = new JLabel();
+        panel.add(solhintFieldLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        solhintPathField = new TextFieldWithHistoryWithBrowseButton();
+        panel.add(solhintPathField, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

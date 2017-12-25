@@ -1,23 +1,18 @@
 package idrabenia.solhint.env.path
 
-import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findAllExeFilesInPath
-import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInPath
 import java.io.File
 
 
-object SolhintPathDetector {
+object SolhintPathDetector : PathDetector() {
 
     fun detectSolhintPath(nodePath: String) =
-        solhintForNode(nodePath) ?: findInPath(solhintName())?.absolutePath ?: ""
+        solhintForNode(nodePath) ?: detectPath(solhintName()) ?: ""
 
     fun detectAllSolhintPaths() =
-        findAllExeFilesInPath(solhintName()).map { it.absolutePath }
+        detectAllInPaths(solhintName())
 
     fun solhintForNode(nodePath: String) =
-        findAllExeFilesInPath(solhintName())
-            .filter { it.startsWith(File(nodePath).parent) }
-            .firstOrNull()
-            ?.absolutePath
+        detectWithFilter(solhintName(), { it.startsWith(File(nodePath).parent) })
 
     fun solhintName() =
         "solhint"

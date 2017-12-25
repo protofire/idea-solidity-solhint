@@ -1,4 +1,4 @@
-package idrabenia.solhint.client.path
+package idrabenia.solhint.env.path
 
 import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findAllExeFilesInPath
 import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInPath

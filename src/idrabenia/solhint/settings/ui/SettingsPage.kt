@@ -2,13 +2,13 @@ package idrabenia.solhint.settings.ui
 
 import com.intellij.openapi.application.ApplicationManager.getApplication
 import com.intellij.openapi.options.Configurable
-import idrabenia.solhint.client.Environment
-import idrabenia.solhint.client.Environment.isCorrectSolhintPath
-import idrabenia.solhint.client.Environment.isSolhintInstalledInNode
-import idrabenia.solhint.client.Environment.solhintNodeRelativePath
+import idrabenia.solhint.env.Environment
+import idrabenia.solhint.env.Environment.isCorrectSolhintPath
+import idrabenia.solhint.env.Environment.isSolhintInstalledInNode
+import idrabenia.solhint.env.Environment.solhintNodeRelativePath
 import idrabenia.solhint.client.SolhintClient
-import idrabenia.solhint.client.path.SolhintPathDetector
-import idrabenia.solhint.client.path.SolhintPathDetector.detectAllSolhintPaths
+import idrabenia.solhint.env.path.SolhintPathDetector
+import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath

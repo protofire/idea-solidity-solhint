@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.intellij.openapi.diagnostic.Logger
 import idrabenia.solhint.client.process.AbstractSolhintProcess
 import idrabenia.solhint.common.IoStreams.toByteArray
+import idrabenia.solhint.env.Environment
 import idrabenia.solhint.errors.ErrorList
 import java.net.URL
 import java.net.URLEncoder

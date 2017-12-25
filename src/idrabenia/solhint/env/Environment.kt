@@ -1,4 +1,4 @@
-package idrabenia.solhint.client
+package idrabenia.solhint.env
 
 import com.intellij.execution.configurations.PathEnvironmentVariableUtil.findInPath
 import com.intellij.openapi.diagnostic.Logger
@@ -11,7 +11,6 @@ import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
 import java.lang.System.getProperty
-import java.nio.file.Path
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeUnit.SECONDS
 

@@ -8,8 +8,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
-import idrabenia.solhint.client.path.NodePathDetector
-import idrabenia.solhint.client.path.SolhintPathDetector
+import idrabenia.solhint.env.path.NodePathDetector
+import idrabenia.solhint.env.path.SolhintPathDetector
 import idrabenia.solhint.common.Debouncer
 import java.awt.EventQueue
 import java.awt.Insets

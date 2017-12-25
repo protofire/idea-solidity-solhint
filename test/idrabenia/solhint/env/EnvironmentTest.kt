@@ -1,6 +1,5 @@
-package idrabenia.solhint
+package idrabenia.solhint.env
 
-import idrabenia.solhint.client.Environment
 import org.junit.Test
 
 

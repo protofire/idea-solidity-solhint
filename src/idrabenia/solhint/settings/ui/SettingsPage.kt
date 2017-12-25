@@ -2,21 +2,18 @@ package idrabenia.solhint.settings.ui
 
 import com.intellij.openapi.application.ApplicationManager.getApplication
 import com.intellij.openapi.options.Configurable
+import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.env.Environment
 import idrabenia.solhint.env.Environment.isCorrectSolhintPath
 import idrabenia.solhint.env.Environment.isSolhintInstalledInNode
 import idrabenia.solhint.env.Environment.solhintNodeRelativePath
-import idrabenia.solhint.client.SolhintClient
-import idrabenia.solhint.env.path.SolhintPathDetector
 import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
-import idrabenia.solhint.settings.ui.view.MessagePanel
 import idrabenia.solhint.settings.ui.view.MessagePanel.State.*
 import idrabenia.solhint.settings.ui.view.SettingsView
 import java.awt.EventQueue
-import java.util.function.Consumer
 import javax.swing.JComponent
 
 
@@ -24,9 +21,9 @@ class SettingsPage : Configurable {
     val view = SettingsView(
         nodePath(),
         solhintPath(),
-        Consumer<String> { onNodePathChanged(it) },
-        Consumer<String> { onSolhintPathChanged(it) },
-        Runnable { installSolhint() }
+        { onNodePathChanged(it) },
+        { onSolhintPathChanged(it) },
+        { installSolhint() }
     )
 
     override fun getDisplayName() = "Solidity Solhint Settings"

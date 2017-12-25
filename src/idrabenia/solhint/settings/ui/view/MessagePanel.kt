@@ -14,7 +14,7 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 
 
-class MessagePanel(val installSolhintButtonListener: Runnable) {
+class MessagePanel(val installSolhintButtonListener: () -> Unit) {
     enum class State {
         HIDE_ALL, INCORRECT, SOLHINT_INCORRECT, INSTALL_REQUIRED, INSTALL_IN_PROGRESS, READY_TO_WORK
     }
@@ -109,7 +109,7 @@ class MessagePanel(val installSolhintButtonListener: Runnable) {
 
         val installSolhintButton = JButton()
         installSolhintButton.text = "Install Solhint"
-        installSolhintButton.addActionListener { installSolhintButtonListener.run() }
+        installSolhintButton.addActionListener { installSolhintButtonListener.invoke() }
         panel.add(installSolhintButton, GridConstraints(0, 1, 1, 1, ANCHOR_WEST, FILL_NONE,
                 SIZEPOLICY_CAN_SHRINK or SIZEPOLICY_CAN_GROW, SIZEPOLICY_FIXED, null, null, null, 0, false))
 

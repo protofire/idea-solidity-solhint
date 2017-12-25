@@ -8,13 +8,12 @@ import com.intellij.uiDesigner.core.GridLayoutManager
 import com.intellij.uiDesigner.core.Spacer
 import com.intellij.util.ui.SwingHelper.addHistoryOnExpansion
 import com.intellij.util.ui.SwingHelper.installFileCompletionAndBrowseDialog
+import idrabenia.solhint.common.Debouncer
 import idrabenia.solhint.env.path.NodePathDetector
 import idrabenia.solhint.env.path.SolhintPathDetector
-import idrabenia.solhint.common.Debouncer
 import java.awt.EventQueue
 import java.awt.Insets
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import java.util.function.Consumer
 import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
@@ -25,9 +24,9 @@ import javax.swing.event.DocumentListener
 class SettingsView(
         val nodePathVal: String,
         val solhintPathVal: String,
-        val nodePathListener: Consumer<String>,
-        val solhintPathListener: Consumer<String>,
-        val installSolhintButtonListener: Runnable) {
+        val nodePathListener: (String) -> Unit,
+        val solhintPathListener: (String) -> Unit,
+        installSolhintButtonListener: () -> Unit) {
     val messagePanel = MessagePanel(installSolhintButtonListener)
     val panel: JPanel = mainPanel()
     val nodeInterpreterField = findNodeFieldOf(panel)
@@ -146,7 +145,7 @@ class SettingsView(
 
     private fun processNodePathChanged() = Runnable {
         EventQueue.invokeLater {
-            nodePathListener.accept(nodeInterpreterField.text)
+            nodePathListener.invoke(nodeInterpreterField.text)
         }
     }
 
@@ -156,7 +155,7 @@ class SettingsView(
 
     private fun processSolhintPathChanged() = Runnable {
         EventQueue.invokeLater {
-            solhintPathListener.accept(solhintPathField.text)
+            solhintPathListener.invoke(solhintPathField.text)
         }
     }
 

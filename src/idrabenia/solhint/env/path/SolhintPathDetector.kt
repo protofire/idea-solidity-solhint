@@ -14,6 +14,6 @@ object SolhintPathDetector : BasePathDetector() {
         detectAllInPaths(solhintName)
 
     fun solhintForNode(nodePath: String) =
-        detectWithFilter(solhintName, { it.startsWith(File(nodePath).parent) })
+        detectWithFilter(solhintName) { it.startsWith(File(nodePath).parent) }
 
 }

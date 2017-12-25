@@ -24,7 +24,7 @@ function watchConfig() {
 
 function readConfig() {
   const jsonValue = fs.readFileSync(configPath, 'utf-8');
-  config = JSON.parse(jsonValue);
+  return config = JSON.parse(jsonValue);
 }
 
 function requestHandler(request, response) {

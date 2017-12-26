@@ -30,9 +30,8 @@ class SettingsPage : Configurable {
 
     override fun getHelpTopic() = "There is page that allow to configure Solidity Solhint Plugin"
 
-    override fun isModified(): Boolean {
-        return nodePath() != view.nodePath || solhintPath() != view.solhintPath
-    }
+    override fun isModified(): Boolean =
+        nodePath() != view.nodePath || solhintPath() != view.solhintPath
 
     override fun apply() {
         SettingsManager.setNodePath(view.nodePath)

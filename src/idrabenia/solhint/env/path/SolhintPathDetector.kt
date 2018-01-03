@@ -11,7 +11,7 @@ object SolhintPathDetector : BasePathDetector() {
         solhintForNode(nodePath) ?: firstSolhintFromEnv() ?: ""
 
     fun solhintForNode(nodePath: String) =
-        SolhintCmd { solhintPathThatSiblingToNode(nodePath) }.pathToSolhintJs()
+        SolhintCmd(solhintCmdSiblingToNode(nodePath)).pathToSolhintJs()
 
     fun firstSolhintFromEnv() =
         detectAllSolhintPaths().firstOrNull()
@@ -21,7 +21,7 @@ object SolhintPathDetector : BasePathDetector() {
             .map { SolhintCmd(it).pathToSolhintJs() }
             .filterNotNull()
 
-    private fun solhintPathThatSiblingToNode(nodePath: String) =
+    private fun solhintCmdSiblingToNode(nodePath: String) =
         detectWithFilter(solhintName, { it.parent == File(nodePath).parent })
 
 }

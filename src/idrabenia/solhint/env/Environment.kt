@@ -48,7 +48,7 @@ object Environment {
         isCorrectSolhintPath(solhintPath())
 
     fun isCorrectSolhintPath(solhintPath: String) =
-        solhintPath.endsWith("solhint") && File(solhintPath).exists()
+        solhintPath.endsWith("solhint") || solhintPath.endsWith("solhint.js") && File(solhintPath).exists()
 
     fun isSolhintInstalledInNode(nodePath: String) =
         solhintNodeRelativePath(nodePath).exists()

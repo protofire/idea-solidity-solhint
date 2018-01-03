@@ -10,6 +10,7 @@ import idrabenia.solhint.env.Environment.solhintNodeRelativePath
 import idrabenia.solhint.env.Environment.solhintJsPathForNode
 import idrabenia.solhint.env.path.SolhintPathDetector
 import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
+import idrabenia.solhint.env.path.SolhintPathDetector.detectSolhintPath
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
@@ -93,7 +94,7 @@ class SettingsPage : Configurable {
             Environment.installSolhint(view.nodePath)
 
             EventQueue.invokeLater {
-                view.solhintPath = SolhintPathDetector.detectSolhintPath(view.nodePath)
+                view.solhintPath = detectSolhintPath(view.nodePath)
                 onNodePathChanged(view.nodePath)
             }
         }

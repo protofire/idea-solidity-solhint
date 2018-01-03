@@ -23,9 +23,9 @@ object SolhintPathDetector : BasePathDetector() {
     fun String.toSolhintJsPath() =
         if (this.realPath().endsWith("solhint.js")) {
             this.realPath()
-        } else if (File(this.realPath()).resolve("node_modules/solhint/solhint.js").exists()){
+        } else if (File(this.realPath()).resolveSibling("node_modules/solhint/solhint.js").exists()){
             File(this.realPath())
-                .resolve("node_modules/solhint/solhint.js")
+                .resolveSibling("node_modules/solhint/solhint.js")
                 .absolutePath
         } else {
             null

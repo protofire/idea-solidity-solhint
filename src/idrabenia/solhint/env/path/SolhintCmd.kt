@@ -5,6 +5,8 @@ import java.io.File
 
 class SolhintCmd(val cmdPath: String?) {
 
+    constructor(cmd: File?): this(cmd?.absolutePath)
+
     fun pathToSolhintJs() =
         if (cmdPath != null) {
             solhintJs().path()

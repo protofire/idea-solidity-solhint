@@ -7,6 +7,7 @@ import idrabenia.solhint.client.process.ServerProcess
 import idrabenia.solhint.common.IdeMessages.notifyThatNodeNotInstalled
 import idrabenia.solhint.common.IdeMessages.notifyThatSolhintNotInstalled
 import idrabenia.solhint.common.IoStreams.drain
+import idrabenia.solhint.env.path.SolhintCmd
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
 import java.io.File
@@ -51,13 +52,13 @@ object Environment {
         solhintPath.endsWith("solhint.js") && File(solhintPath).exists()
 
     fun isSolhintInstalledInNode(nodePath: String) =
-        solhintNodeRelativePath(nodePath).exists()
+        solhintCmdPathSiblingNode(nodePath).exists() && solhintJsPathForNode(nodePath) != null
 
-    fun solhintNodeRelativePath(nodePath: String) =
+    fun solhintCmdPathSiblingNode(nodePath: String) =
         File(nodePath).resolveSibling("solhint")
 
     fun solhintJsPathForNode(nodePath: String) =
-        solhintNodeRelativePath(nodePath).toPath().toRealPath().toFile().absolutePath
+        SolhintCmd(solhintCmdPathSiblingNode(nodePath)).pathToSolhintJs()
 
     fun solhintRealPath() =
         File(solhintPath()).toPath().toRealPath().toFile().absolutePath

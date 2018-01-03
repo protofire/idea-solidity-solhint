@@ -6,7 +6,7 @@ import idrabenia.solhint.client.SolhintClient
 import idrabenia.solhint.env.Environment
 import idrabenia.solhint.env.Environment.isCorrectSolhintPath
 import idrabenia.solhint.env.Environment.isSolhintInstalledInNode
-import idrabenia.solhint.env.Environment.solhintNodeRelativePath
+import idrabenia.solhint.env.Environment.solhintCmdPathSiblingNode
 import idrabenia.solhint.env.Environment.solhintJsPathForNode
 import idrabenia.solhint.env.path.SolhintPathDetector
 import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
@@ -59,7 +59,7 @@ class SettingsPage : Configurable {
 
     fun onNodePathChanged(newNodePath: String) {
         if (isSolhintInstalledInNode(newNodePath)) {
-            view.solhintPath = solhintJsPathForNode(newNodePath)
+            view.solhintPath = solhintJsPathForNode(newNodePath)!!
         }
 
         validateSolhintPath(view.solhintPath)
@@ -96,7 +96,7 @@ class SettingsPage : Configurable {
 
             EventQueue.invokeLater {
                 view.solhintPath = detectSolhintPath(view.nodePath)
-                onNodePathChanged(view.nodePath)
+                validateSolhintPath(view.solhintPath)
             }
         }
     }

@@ -47,6 +47,7 @@ class SettingsPage : Configurable {
 
     override fun createComponent(): JComponent? {
         onNodePathChanged(view.nodePath)
+        onSolhintPathChanged(view.solhintPath)
 
         return view.panel
     }

@@ -87,7 +87,7 @@ class MessagePanel(val installSolhintButtonListener: () -> Unit) {
         label.name = "solhintPathIncorrectMessage"
         label.font = Font(label.getFont().getName(), Font.ITALIC, label.getFont().getSize())
         label.foreground = Color(-1623760)
-        label.text = "Path to Solhint is incorrect"
+        label.text = "Solhint path is incorrect. You need target file `node_modules/solhint/solhint.js`"
         label.isVisible = false
 
         return label

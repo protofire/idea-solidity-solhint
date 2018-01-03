@@ -20,19 +20,20 @@ object SolhintPathDetector : BasePathDetector() {
             { it.startsWith(File(nodePath).parent) }
             ?.toSolhintJsPath()
 
-    fun String.toSolhintJsPath() =
-        if (this.realPath().endsWith("solhint.js")) {
-            this.realPath()
-        } else if (File(this.realPath()).resolveSibling("node_modules/solhint/solhint.js").exists()){
-            File(this.realPath())
-                .resolveSibling("node_modules/solhint/solhint.js")
-                .absolutePath
+    private fun String.toSolhintJsPath() =
+        if (realPath(this).endsWith("solhint.js")) {
+            realPath(this)
+        } else if (solhintJsWinFile(this).exists()) {
+            solhintJsWinFile(this).absolutePath
         } else {
             null
         }
 
-    fun String.realPath() =
-        File(this)
+    private fun solhintJsWinFile(solhintPath: String) =
+        File(realPath(solhintPath)).resolveSibling("node_modules/solhint/solhint.js")
+
+    private fun realPath(filePath: String) =
+        File(filePath)
             .toPath()
             .toRealPath()
             .toFile()

@@ -131,7 +131,7 @@ class SettingsView(
     private fun solhintFieldLabel(): JLabel {
         val label = JLabel()
 
-        label.text = "Solhint Binary"
+        label.text = "Solhint JS File"
         label.setDisplayedMnemonic('S')
         label.displayedMnemonicIndex = 0
         label.toolTipText = "This path should point to Solhint executable file path."

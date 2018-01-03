@@ -11,6 +11,7 @@ import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
 import idrabenia.solhint.settings.data.SettingsManager.solhintPath
+import idrabenia.solhint.settings.ui.view.MessagePanel
 import idrabenia.solhint.settings.ui.view.MessagePanel.State.*
 import idrabenia.solhint.settings.ui.view.SettingsView
 import java.awt.EventQueue
@@ -66,22 +67,25 @@ class SettingsPage : Configurable {
 
     private fun validateSolhintPath(solhintPath: String) =
         if (detectAllSolhintPaths().isEmpty()) {
-            view.setMessage(INSTALL_REQUIRED)
+            setStatus(INSTALL_REQUIRED)
         } else if (isCorrectSolhintPath(solhintPath)) {
-            view.setMessage(READY_TO_WORK)
+            setStatus(READY_TO_WORK)
         } else {
-            view.setMessage(SOLHINT_INCORRECT)
+            setStatus(SOLHINT_INCORRECT)
         }
 
     private fun validateNodePath(nodePath: String) =
         if (!Environment.isNodeJsInstalled(nodePath)) {
-            view.setMessage(INCORRECT)
+            setStatus(INCORRECT)
         } else {
-            view.setMessage(READY_TO_WORK)
+            setStatus(READY_TO_WORK)
         }
 
+    private fun setStatus(status: MessagePanel.State) =
+        view.setMessage(status)
+
     fun installSolhint() {
-        view.setMessage(INSTALL_IN_PROGRESS)
+        setStatus(INSTALL_IN_PROGRESS)
 
         getApplication().executeOnPooledThread {
             Environment.installSolhint(view.nodePath)

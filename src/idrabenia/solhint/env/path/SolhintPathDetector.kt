@@ -1,6 +1,7 @@
 package idrabenia.solhint.env.path
 
 import java.io.File
+import java.util.*
 
 
 object SolhintPathDetector : BasePathDetector() {
@@ -8,35 +9,55 @@ object SolhintPathDetector : BasePathDetector() {
     private val solhintName = "solhint"
 
     fun detectSolhintPath(nodePath: String) =
-        solhintForNode(nodePath) ?: detectPath(solhintName) ?: ""
+        solhintForNode(nodePath) ?: firstSolhintFromEnv() ?: ""
+
+    fun solhintForNode(nodePath: String) =
+        optional(solhintCmdThatSiblingToNode(nodePath))
+            .map { value -> solhintJsPath(value) }
+            .orElse(null)
+
+    fun firstSolhintFromEnv() =
+        detectAllSolhintPaths()
+            .firstOrNull()
 
     fun detectAllSolhintPaths() =
         detectAllInPaths(solhintName)
-            .map { it.toSolhintJsPath() }
-            .filter { it != null && !it.isEmpty() }
+            .map { solhintJsPath(it) }
+            .filterNotNull()
 
-    fun solhintForNode(nodePath: String) =
-        detectWithFilter(solhintName)
-            { it.startsWith(File(nodePath).parent) }
-            ?.toSolhintJsPath()
+    private fun solhintCmdThatSiblingToNode(nodePath: String) =
+        detectWithFilter(solhintName, { it.parent == File(nodePath).parent })
 
-    private fun String.toSolhintJsPath() =
-        if (realPath(this).endsWith("solhint.js")) {
-            realPath(this)
-        } else if (solhintJsWinFile(this).exists()) {
-            solhintJsWinFile(this).absolutePath
+    private fun solhintJsPath(cmdPath: String): String? {
+        val cmdRealPath = resolveSymlink(cmdPath)
+
+        if (cmdRealPath.endsWith("solhint.js")) {
+            return cmdRealPath
         } else {
-            null
+            return solhintJsPathOnWindows(cmdPath)
         }
+    }
 
-    private fun solhintJsWinFile(solhintPath: String) =
-        File(realPath(solhintPath)).resolveSibling("node_modules/solhint/solhint.js")
+    private fun solhintJsPathOnWindows(cmdPath: String) =
+        optional(solhintJsFileOnWin(cmdPath))
+            .filter(File::exists)
+            .map(File::getAbsolutePath)
+            .orElse(null)
 
-    private fun realPath(filePath: String) =
+    private fun solhintJsFileOnWin(solhintCmd: String) =
+        optional(resolveSymlink(solhintCmd))
+            .map(::File)
+            .map { it.resolveSibling("node_modules/solhint/solhint.js") }
+            .orElse(null)
+
+    private fun resolveSymlink(filePath: String) =
         File(filePath)
             .toPath()
             .toRealPath()
             .toFile()
             .absolutePath
+
+    private fun <T> optional(value: T?) =
+        Optional.ofNullable<T>(value)
 
 }

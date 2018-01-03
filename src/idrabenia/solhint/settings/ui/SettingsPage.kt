@@ -7,6 +7,8 @@ import idrabenia.solhint.env.Environment
 import idrabenia.solhint.env.Environment.isCorrectSolhintPath
 import idrabenia.solhint.env.Environment.isSolhintInstalledInNode
 import idrabenia.solhint.env.Environment.solhintNodeRelativePath
+import idrabenia.solhint.env.Environment.solhintJsPathForNode
+import idrabenia.solhint.env.path.SolhintPathDetector
 import idrabenia.solhint.env.path.SolhintPathDetector.detectAllSolhintPaths
 import idrabenia.solhint.settings.data.SettingsManager
 import idrabenia.solhint.settings.data.SettingsManager.nodePath
@@ -55,7 +57,7 @@ class SettingsPage : Configurable {
 
     fun onNodePathChanged(newNodePath: String) {
         if (isSolhintInstalledInNode(newNodePath)) {
-            view.solhintPath = solhintNodeRelativePath(newNodePath).absolutePath
+            view.solhintPath = solhintJsPathForNode(newNodePath)
         }
 
         validateSolhintPath(view.solhintPath)

@@ -92,7 +92,10 @@ class SettingsPage : Configurable {
         getApplication().executeOnPooledThread {
             Environment.installSolhint(view.nodePath)
 
-            EventQueue.invokeLater { onNodePathChanged(view.nodePath) }
+            EventQueue.invokeLater {
+                view.solhintPath = SolhintPathDetector.detectSolhintPath(view.nodePath)
+                onNodePathChanged(view.nodePath)
+            }
         }
     }
 

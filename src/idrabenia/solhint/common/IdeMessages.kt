@@ -20,8 +20,8 @@ object IdeMessages {
 
     fun notifyThatSolhintNotInstalled() =
         error(
-            "Solhint is not installed",
-            "For correct run of Solidity Solhint Plugin you need to install Solhint. <a href=\"settings\">Fix</a>",
+            "Solhint is not found",
+            "Please provide correct path to Solhint. <a href=\"settings\">Fix</a>",
             OpenSettingsListener
         )
 
